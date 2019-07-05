@@ -1,1 +1,4 @@
 dbcon.js
+
+# Ignore Modules
+node_modules/
