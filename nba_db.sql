@@ -99,3 +99,78 @@ INSERT INTO `nba_championships` VALUES (1991, 23, 1, 6, 4, 6),
 (2017, 21, 4, 7, 1, 21),
 (2018, 21, 4, 7, 0, 21),
 (2019, 21, 2, 5, 4, 5);
+
+
+---------------------------------------------
+
+CREATE table players(
+    id int(11) not null AUTO_INCREMENT,
+    first_name varchar (100) not null,
+    last_name varchar (100) not null,
+    team_ID int(11)not null,
+    birthdate date not null,
+    points int(11) not null,
+    school varchar(100) not null,
+    position varchar(100) not null,
+    player_year_start int(11) not null,
+    last_year_active int(11) ,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_player_team FOREIGN KEY  (team_ID) REFERENCES nba_teams (id)
+);
+
+--------------------------------------------------
+
+INSERT INTO players (id,first_name,last_name,team_ID,birthdate,points,school,position,player_year_start,last_year_active) VALUES
+(020384,'KAWHI','LEONARD',22,'1991-06-29',25321,'SAN DIEGO STATE','SMALL FORWARD',2011,NULL),
+(042842,'KEMBA','WALKER',12,'1990-05-08',10293,'UCONN','POINT GUARD',2011,NULL),
+(093421,'KYRIE','IRVING',1,'1992-05-23',14592,'DUKE','POINT GUARD',2011,NULL),
+(102425,'GIANNIS','ANTETOKOUNMPO',10,'1994-12-06',9348,'FILATHLITIKOS','POWER FORWARD',2013,NULL),
+(203741,'JOEL','EMBID',4,'1994-03-16',7240,'KANSAS','CENTER',2014,NULL),
+(023491,'KYLE','LOWRY',5,'1986-03-25',13023,'VILLANOVA','POINT GUARD',2006,NULL),
+(034204,'BLAKE','GRIFFIN',8,'1989-03-16',11983,'OKLAHOMA','SMALL FORWARD',2009,NULL),
+(139523,'BRADLEY','BEAL',15,'1993-06-28',7802,'FLORIDA','SHOOTING GUARD',2012,NULL),
+(081435,'VICTOR','OLADIPO',9,'1992-05-04',10283,'INDIANA','SHOOTING GUARD',2013,NULL),
+(093252,'DWAYNE','WADE',13,'1982-01-17',25023,'MARQUETTE','SHOOTING GUARD',2003,2019),
+(123955,'STEPHEN','CURRY',21,'1988-03-14',15251,'DAVIDSON','POINT GUARD',2009,NULL),
+(028132,'JAMES','HARDEN',27,'1989-08-26',18492,'ARIZONA STATE','SHOOTING GUARD',2009,NULL),
+(193411,'KEVIN','DURANT',2,'1988-09-29',19024,'TEXAS','SMALL FORWARD',2007,NULL),
+(093824,'LEBRON','JAMES',23,'1984-12-30',28391,'ST.MARY HS','SMALL FORWARD',2003,NULL),
+(102934,'PAUL','GEORGE',22,'1990-05-02',17394,'FRESNO STATE','SMALL FORWARD',2010,NULL),
+(120452,'RUSSELL','WESTBROOK',13,'1988-11-12',16924,'UCLA','POINT GUARD',2008,NULL),
+(092321,'DAMIAN','LILLARD',19,'1990-07-15',13092,'WEBER STATE','POINT GUARD',2012,NULL),
+(143923,'ANTHONY','DAVIS',23,'1993-03-11',14031,'KENTUCKY','POWER FORWARD',2012,NULL),
+(091842,'LAMARCUS','ALDRIDGE',30,'1985-07-19',13902,'TEXAS','POWER FORWARD',2006,NULL),
+(072935,'DIRK','NOWITZKI',26,'1978-06-19',27392,'DJK WURZBURG','POWER FORWARD',1994,2019),
+(140924,'KARL-ANTHONY','TOWNS',17,'1995-11-15',7823,'KENTUCKY','CENTER',2015,NULL);
+
+
+------------------------------------------------------------------------------------
+
+CREATE table endorsements(
+    contractual_id int(11) not null AUTO_INCREMENT,
+    player_id int(11) not null,
+    company_name varchar (100) not null,
+    years_signed int(11)not null,
+    salary int(15) not null,
+    PRIMARY KEY (contractual_id),
+    CONSTRAINT FK_player_endorsement FOREIGN KEY (player_id) REFERENCES players(id)
+);
+
+---------------------------------------------------------------------------------
+
+insert into endorsements (contractual_id,player_id,company_name,years_signed,salary) 
+VALUES (6283741,093824,'NIKE',50,1000000000),
+(205826,093824,'COCA-COLA',10,20000000),
+(610394,123955,'UNDER ARMOUR',10,285000000),
+(024824,193411,'NIKE',12,72000000),
+(402986,020384,'NEW BALANCE',5,80000000),
+(729351,093252,'LI-NING',10,70000000),
+(802475,028132,'ADIDAS',13,200000000),
+(902419,120452,'NIKE',10,65000000),
+(409275,091842,'NIKE',8,47000000),
+(793842,092341,'NIKE',10,80000000),
+(920462,034204,'KIA',5,75000000),
+(704274,072935,'NIKE',10,50000000),
+(943052,102934,'GATORADE',5,25000000),
+(293852,093421,'FOOT LOCKER',5,30000000),
+(824951,123955,'CHASE',45000000);
