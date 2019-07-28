@@ -11,6 +11,10 @@ SELECT * FROM nba_teams WHERE id = :team_id_from_dropdown
 -- get teams based on conference
 SELECT id, team_city, name FROM nba_teams WHERE conference = :conference_from_menu
 
+-- add a new team
+INSERT INTO nba_teams (team_city, name, conference, division, arena, head_coach) 
+VALUES (:cityInput, :nameInput, :conferenceInput, :divisionInput, :arenaInput, :coachInput)
+
 ---
 --- CHAMPIONSHIP ENTITY DATA MANIPULATION QUERIES
 ---
@@ -25,3 +29,7 @@ INNER JOIN nba_teams AS t1 ON t1.id = c.west_teamID
 INNER JOIN nba_teams AS t2 ON t2.id = c.east_teamID
 INNER JOIN nba_teams AS t3 ON t3.id = c.winner
 WHERE year = :year_from_input
+
+--- add a new championship
+INSERT INTO nba_championships (year, west_teamID, west_record, east_teamID, east_record, winner)
+VALUES (:yearInput, :westInput, :westRecInput, :eastInput, :eastRecInput, :winnerInput)
