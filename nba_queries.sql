@@ -15,6 +15,9 @@ SELECT id, team_city, name FROM nba_teams WHERE conference = :conference_from_me
 INSERT INTO nba_teams (team_city, name, conference, division, arena, head_coach) 
 VALUES (:cityInput, :nameInput, :conferenceInput, :divisionInput, :arenaInput, :coachInput)
 
+-- update a team's data based on submission
+UPDATE nba_teams SET team_city = :cityInput, name = :nameInput, conference = :conferenceInput, division = :divisionInput, arena = :arenaInput, head_coach = :coachInput
+
 ---
 --- CHAMPIONSHIP ENTITY DATA MANIPULATION QUERIES
 ---
