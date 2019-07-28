@@ -25,11 +25,11 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/players', function (req, res, next) {
-    res.render('home') // TODO: CREATE PLAYERS PAGE
+    res.render('players')
 });
 
 app.get('/endorsements', function (req, res, next) {
-    res.render('home') // TODO: CREATE ENDORSEMENT PAGE
+    res.render('endorsements')
 });
 
 app.get('/teams', function (req, res, next) {
