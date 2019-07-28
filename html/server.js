@@ -19,25 +19,36 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', 7137); // SET SPECIFIC PORT - CHANGE IF UNAVAILABLE
 
+
 // WEBSITE RESPONSES
 app.get('/', function (req, res, next) {
-    res.render('home')
+    res.render('home', {
+        title: 'Home'
+    })
 });
 
 app.get('/players', function (req, res, next) {
-    res.render('players')
+    res.render('players', {
+        title: 'Players'
+    })
 });
 
 app.get('/endorsements', function (req, res, next) {
-    res.render('endorsements')
+    res.render('endorsements', {
+        title: 'Endorsements'
+    })
 });
 
 app.get('/teams', function (req, res, next) {
-    res.render('teams')
+    res.render('teams', {
+        title: 'Teams'
+    })
 });
 
 app.get('/championships', function (req, res, next) {
-    res.render('championships')
+    res.render('championships', {
+        title: 'Championships'
+    })
 });
 
 // ERROR HANDLING //
