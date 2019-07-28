@@ -36,3 +36,23 @@ WHERE year = :year_from_input
 --- add a new championship
 INSERT INTO nba_championships (year, west_teamID, west_record, east_teamID, east_record, winner)
 VALUES (:yearInput, :westInput, :westRecInput, :eastInput, :eastRecInput, :winnerInput)
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+--get all of the the player data
+
+select * from players;
+
+select * from players where points <= :pointsInput;
+
+select p.first_name,p.last_name,t.name 
+from players p inner join nab_teams t on t.id = p.team_ID 
+where t.name = :teamNameInput;
+
+---add a player
+
+insert into players (id,first_name,last_name,team_ID,birthdate,points,school,position,player_year_start,last_year_active)
+values (:IdInput,:firstNameInput,:lastNameInput,:teamIDInput,:birthdateInput,:pointsInput,:schoolInput,:positionInput,:playerYearStartInput,:lastYearActiveInput);
+
