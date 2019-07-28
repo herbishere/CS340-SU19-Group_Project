@@ -40,8 +40,8 @@ VALUES (:yearInput, :westInput, :westRecInput, :eastInput, :eastRecInput, :winne
 
 
 
-------------------------------------------------------------------------------------------------------------
---get all of the the player data
+-------------------------------------------------------------------------------------------------------------------------------------------
+---get all of the the player data
 
 select * from players;
 
@@ -55,4 +55,19 @@ where t.name = :teamNameInput;
 
 insert into players (id,first_name,last_name,team_ID,birthdate,points,school,position,player_year_start,last_year_active)
 values (:IdInput,:firstNameInput,:lastNameInput,:teamIDInput,:birthdateInput,:pointsInput,:schoolInput,:positionInput,:playerYearStartInput,:lastYearActiveInput);
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+--get all of the endorsements info
+
+select * from endorsements;
+
+select e.company_name,p.first_name,e.salary 
+from endorsements e inner join players p on p.id = e.player_ID
+where company_name = :companyNameInput;
+
+delete from endorsements where contractual_id = :contractualIDInput;
+
+
+
 
