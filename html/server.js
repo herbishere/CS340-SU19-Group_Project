@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 63061); // SET SPECIFIC PORT
+app.set('port', 7137); // SET SPECIFIC PORT - CHANGE IF UNAVAILABLE
 
 // WEBSITE RESPONSES
 app.get('/', function (req, res, next) {
@@ -25,19 +25,19 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/players', function (req, res, next) {
-    res.render('home')
+    res.render('home') // TODO: CREATE PLAYERS PAGE
 });
 
 app.get('/endorsements', function (req, res, next) {
-    res.render('home')
+    res.render('home') // TODO: CREATE ENDORSEMENT PAGE
 });
 
 app.get('/teams', function (req, res, next) {
-    res.render('home')
+    res.render('teams')
 });
 
 app.get('/championships', function (req, res, next) {
-    res.render('home')
+    res.render('championships')
 });
 
 // ERROR HANDLING //
