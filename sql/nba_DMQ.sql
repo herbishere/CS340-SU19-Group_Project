@@ -68,6 +68,22 @@ where company_name = :companyNameInput;
 
 delete from endorsements where contractual_id = :contractualIDInput;
 
+-------------------------------------------------------------------------
+
+select * from player_championships;
+
+select * from player_championships where championship_ID = :yearUserInput;
+
+insert into player_championships (player_ID, championship_ID) values (:playerID_Input, :championshipID_Input);
+
+--------------------------------------------------------------------------------
+
+select * from player_endorsements;
+
+select * from player_endorsements where player_ID = :playerIDUserInput;
+
+insert into player_endorsements (player_ID,endorsement_ID);
+
 
 
 

@@ -61,9 +61,9 @@ CREATE TABLE `nba_championships` (
     `east_record` int(11) NOT NULL,
     `winner` int(11) NOT NULL,
     PRIMARY KEY (`year`),
-    CONSTRAINT `FK_champ_team1` FOREIGN KEY  (`west_teamID`) REFERENCES `nba_teams` (`id`),
-    CONSTRAINT `FK_champ_team2` FOREIGN KEY  (`east_teamID`) REFERENCES `nba_teams` (`id`),
-    CONSTRAINT `FK_champ_winner` FOREIGN KEY  (`winner`) REFERENCES `nba_teams` (`id`)
+    CONSTRAINT `FK_champ_team1` FOREIGN KEY  (`west_teamID`) REFERENCES `nba_teams` (`id`) on delete cascade,
+    CONSTRAINT `FK_champ_team2` FOREIGN KEY  (`east_teamID`) REFERENCES `nba_teams` (`id`) on delete cascade,
+    CONSTRAINT `FK_champ_winner` FOREIGN KEY  (`winner`) REFERENCES `nba_teams` (`id`) on delete cascade
 );
 
 ---
@@ -115,7 +115,7 @@ CREATE table players(
     player_year_start int(11) not null,
     last_year_active int(11) ,
     PRIMARY KEY (id),
-    CONSTRAINT FK_player_team FOREIGN KEY  (team_ID) REFERENCES nba_teams (id)
+    CONSTRAINT FK_player_team FOREIGN KEY  (team_ID) REFERENCES nba_teams (id) on delete cascade
 );
 
 --------------------------------------------------
@@ -153,7 +153,7 @@ CREATE table endorsements(
     years_signed int(11)not null,
     salary int(15) not null,
     PRIMARY KEY (contractual_id),
-    CONSTRAINT FK_player_endorsement FOREIGN KEY (player_id) REFERENCES players(id)
+    CONSTRAINT FK_player_endorsement FOREIGN KEY (player_id) REFERENCES players(id) on delete cascade
 );
 
 ---------------------------------------------------------------------------------
@@ -174,3 +174,40 @@ VALUES (6283741,093824,'NIKE',50,1000000000),
 (943052,102934,'GATORADE',5,25000000),
 (293852,093421,'FOOT LOCKER',5,30000000),
 (824951,123955,'CHASE',45000000);
+
+
+--------------------------------------------------
+create table player_championships(
+    player_ID int(11) not null,
+    championship_ID int(11) not null,
+    constraint FK_playerID_championshps foreign key (player_ID) references players(id) on delete cascade,
+    constraint FK_championshipID_player foreign key (championship_ID) references nba_championships(year) on delete cascade );
+    
+---------------------------------------------
+insert into player_championships (player_ID,champions) 
+values (020384,2019),(020384,2014),(123955,2015),(123955,2016),(123955,2017),(123955,2018),(123955,2019),(093824,2007),(093824,2011),(093824,2011),(093824,2012),(093824,2013),(093824,2014),(093824,2015),(193411,2018),(193411,2019),(093421,2016),(093252,2006),(093252,2012),(093252,2013),(028132,2012),(120452,2012),(072935,2006)(072935,2011);
+----------------------------------------------
+create table player_endorsements(
+    player_ID int(11) not null,
+    endorsement_ID int(11) not null,
+    constraint FK_playerID_endorsements foreign key (player_ID) references players(id) on delete cascade,
+    constraint FK_endorsementID_player foreign key (endorsement_ID) references endorsements(contractual_ID) on delete cascade );
+    
+    --------------------------------------
+insert into player_endorsements(endorsement_ID,player_ID)
+values (6283741,093824),
+(205826,093824),
+(610394,123955),
+(024824,193411),
+(402986,020384),
+(729351,093252),
+(802475,028132),
+(902419,120452),
+(409275,091842),
+(793842,092341),
+(920462,034204),
+(704274,072935),
+(943052,102934),
+(293852,093421),
+(824951,123955);
+    
