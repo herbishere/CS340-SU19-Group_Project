@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 8987); // SET SPECIFIC PORT - CHANGE IF UNAVAILABLE
+app.set('port', 7137); // SET SPECIFIC PORT - CHANGE IF UNAVAILABLE
 
 
 // WEBSITE RESPONSES
