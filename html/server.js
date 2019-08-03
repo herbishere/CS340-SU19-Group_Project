@@ -48,15 +48,6 @@ app.get('/teams', function (req, res, next) {
         }
         context.team = rows;
         context.title = 'Teams'
-        context.team.forEach(function (element) {
-            var id = element.id;
-            var team_city = element.team_city;
-            var name = element.name;
-            var conference = element.conference;
-            var division = element.division;
-            var arena = element.arena;
-            var coach = element.head_coach;
-        });
         res.render('teams', context);
     });
 });
