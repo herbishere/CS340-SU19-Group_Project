@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 7137); // SET SPECIFIC PORT - CHANGE IF UNAVAILABLE
+app.set('port', 8987); // SET SPECIFIC PORT - CHANGE IF UNAVAILABLE
 
 
 // WEBSITE RESPONSES
@@ -40,8 +40,25 @@ app.get('/endorsements', function (req, res, next) {
 });
 
 app.get('/teams', function (req, res, next) {
-    res.render('teams', {
-        title: 'Teams'
+    var context = {};
+    mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+        context.team = rows;
+        context.team.forEach(function (element) {
+            var id = element.id;
+            var team_city = element.team_city;
+            var name = element.name;
+            var conference = element.conference;
+            var division = element.division;
+            var arena = element.arena;
+            var coach = element.head_coach;
+        });
+        res.render('teams', {
+            title: 'Teams'
+        }, context)
     })
 });
 
