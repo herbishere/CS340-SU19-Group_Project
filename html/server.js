@@ -56,9 +56,7 @@ app.get('/teams', function (req, res, next) {
             var arena = element.arena;
             var coach = element.head_coach;
         });
-        res.render('teams', {
-            title: 'Teams'
-        }, context)
+        res.render('teams', context)
     })
 });
 
