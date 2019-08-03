@@ -2,14 +2,8 @@
 --- TEAM ENTITY DATABASE MANIPULATION QUERIES
 ---
 
--- get all Team IDs, City's, and Names to populate the Team dropdown
-SELECT id, team_city, name FROM nba_teams
-
--- get all of a teams information based on team's id
-SELECT * FROM nba_teams WHERE id = :team_id_from_dropdown
-
--- get teams based on conference
-SELECT id, team_city, name FROM nba_teams WHERE conference = :conference_from_menu
+-- get all the team's information in the table
+SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams
 
 -- add a new team
 INSERT INTO nba_teams (team_city, name, conference, division, arena, head_coach) 
