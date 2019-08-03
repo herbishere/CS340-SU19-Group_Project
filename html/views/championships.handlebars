@@ -1,47 +1,31 @@
 <h1>Welcome to the Championships Page!</h1>
-<p>Description: Get Championship Information By Year / Add Championiship</p>
-<div class='form'>
-    <h3>SELECT TEAM</h3>
-    <form>
-        <select name="year">
-            <!--TODO POPULATE FROM DATABASE RESULTS -->
-            <option value='sample'>1991</option>
-            <option value='wooo'>2019</option>
-        </select>
-        <input type="submit" value="Submit">
-    </form>
-</div>
-<p>DESCRIPTION: TABLE HIDDEN UNTIL YEAR SELECTED</p>
+<p>View and Add Championships</p>
+<h2>View Championships</h2>
 <div class="table">
+    <h2>Championships</h2>
     <table>
         <!-- TODO: POPULATE FROM QUERY RESULTS-->
-        <tr>
-            <th>West Team</th>
-            <th>West Record</th>
-            <th>East Team</th>
-            <th>East Record</th>
-            <th>Winner</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>West Conference Champion</th>
+                <th>West Record</th>
+                <th>East Conference Champion</th>
+                <th>East Record</th>
+                <th>Winning Team</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each series}}
+            <tr>
+                <td>{{year}}</td>
+                <td>{{west_champ}}</td>
+                <td>{{west_record}}</td>
+                <td>{{east_champ}}</td>
+                <td>{{east_record}}</td>
+                <td>{{winner}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
     </table>
-</div>
-<p>DESCRIPTION: ADD CHAMPIONSHIP</p>
-<div class='form'>
-    <form>
-        West Team:
-        <input type='text'>
-        <br>
-        West Record:
-        <input type='text'>
-        <br>
-        East Team:
-        <input type='text'>
-        <br>
-        East Record:
-        <input type='text'>
-        <br>
-        Winner:
-        <input type='text'>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
 </div>
