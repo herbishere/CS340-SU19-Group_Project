@@ -47,6 +47,7 @@ app.get('/teams', function (req, res, next) {
             return;
         }
         context.team = rows;
+        context.title = 'Teams'
         context.team.forEach(function (element) {
             var id = element.id;
             var team_city = element.team_city;
@@ -56,8 +57,8 @@ app.get('/teams', function (req, res, next) {
             var arena = element.arena;
             var coach = element.head_coach;
         });
-        res.render('teams', context)
-    })
+        res.render('teams', context);
+    });
 });
 
 app.get('/championships', function (req, res, next) {
