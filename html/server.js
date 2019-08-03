@@ -61,7 +61,7 @@ app.get('/championships', function (req, res, next) {
         }
         context.series = rows;
         context.title = 'Championships'
-        res.render('teams', context);
+        res.render('championships', context);
     });
 });
 
