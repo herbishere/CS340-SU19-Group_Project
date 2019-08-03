@@ -40,9 +40,16 @@ app.get('/endorsements', function (req, res, next) {
 });
 
 app.get('/teams', function (req, res, next) {
-    res.render('teams', {
-        title: 'Teams'
-    })
+    var context = {};
+    mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+        context.team = rows;
+        context.title = 'Teams'
+        res.render('teams', context);
+    });
 });
 
 app.get('/championships', function (req, res, next) {

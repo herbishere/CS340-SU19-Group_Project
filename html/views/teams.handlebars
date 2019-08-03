@@ -1,54 +1,35 @@
 <h1>Welcome to the Team Page!</h1>
 <p>Description:</p>
-<p>User should be able to browse, retrive, and update the teams information</p>
+<p>View and Update the Teams Information</p>
 <h2>View Team Information</h2>
-<div class='form'>
-    <h3>SELECT TEAM</h3>
-    <form>
-        <select name="team">
-            <!--TODO POPULATE FROM DATABASE RESULTS -->
-            <option value='sample'>Sample</option>
-            <option value='wooo'>Woo</option>
-        </select>
-        <input type="submit" value="Submit">
-    </form>
-</div>
-<br>
-<p>DESCRIPTION: TABLE HIDDEN UNTIL TEAMS SELECTED</p>
 <div class="table">
+    <h2>Teams</h2>
     <table>
         <!-- TODO: POPULATE FROM QUERY RESULTS-->
-        <tr>
-            <th>ID(always hidden)</th>
-            <th>City</th>
-            <th>Name</th>
-            <th>Conference</th>
-            <th>Division</th>
-            <th>Arena</th>
-            <th>Head Coach</th>
-        </tr>
+        <thead>
+            <tr>
+                <th class='hidden'>ID</th>
+                <th>City</th>
+                <th>Name</th>
+                <th>Conference</th>
+                <th>Division</th>
+                <th>Arena</th>
+                <th>Head Coach</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each team}}
+            <tr>
+                <td class='hidden'>{{id}}</td>
+                <td>{{team_city}}</td>
+                <td>{{name}}</td>
+                <td>{{conference}}</td>
+                <td>{{division}}</td>
+                <td>{{arena}}</td>
+                <td>{{head_coach}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
     </table>
 </div>
-<p>DESCRIPTION: FORM HIDDEN UNTIL TEAM SELECTED</p>
-<div class='form'>
-    <form>
-        City:
-        <input type='text'>
-        <br>
-        Name:
-        <input type='text'>
-        <br>
-        Conference:
-        <input type='text'>
-        <br>
-        Division:
-        <input type='text'>
-        <br>
-        Arena:
-        <input type='text'>
-        <br>
-        Head Coach:
-        <input type='text'>
-        <input type="submit" value="Submit">
-    </form>
 </div>
