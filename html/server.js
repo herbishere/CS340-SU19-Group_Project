@@ -170,7 +170,7 @@ INSERT FUNCTIONALITY
 app.get('/player_championsips', function (req, res, next) {
     var context = {};
     context.title = 'Players/Championships'
-    res.render('players/championships', context);
+    res.render('players_championships', context);
 });
 
 // ERROR HANDLING //
