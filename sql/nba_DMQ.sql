@@ -6,10 +6,10 @@
 SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams
 
 -- get all the western conference teams
-SELECT id AS west_id, CONCAT(team_city, ' ', name) AS west_team_name FROM nba_teams WHERE conference = "Western"
+SELECT id AS west_id, CONCAT(team_city, ' ', name) AS west_team_name FROM nba_teams WHERE conference = 'Western'
 
 -- get all the eastern conference teams
-SELECT id AS east_id, CONCAT(team_city, ' ', name) AS east_team_name FROM nba_teams WHERE conference = "Eastern"
+SELECT id AS east_id, CONCAT(team_city, ' ', name) AS east_team_name FROM nba_teams WHERE conference = 'Eastern'
 
 -- get all the teams
 SELECT id AS team_id, CONCAT(team_city, ' ', name) AS team_name FROM nba_teams

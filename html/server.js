@@ -92,15 +92,51 @@ function getChampionshipInfo(res, mysql, context, complete) {
     });
 }
 
+function getWestTeams(res, mysql, context, complete) {
+    mysql.pool.query("SELECT id AS west_id, CONCAT(team_city, ' ', name) AS west_team_name FROM nba_teams WHERE conference = 'Western'", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.west_team = results;
+        complete();
+    });
+}
+
+function getEastTeams(res, mysql, context, complete) {
+    mysql.pool.query("SELECT id AS east_id, CONCAT(team_city, ' ', name) AS east_team_name FROM nba_teams WHERE conference = 'Eastern'", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.east_team = results;
+        complete();
+    });
+}
+
+function getTeams(res, mysql, context, complete) {
+    mysql.pool.query("SELECT id AS team_id, CONCAT(team_city, ' ', name) AS team_name FROM nba_teams", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.team = results;
+        complete();
+    });
+}
+
 app.get('/championships', function (req, res) {
     var callbackCount = 0;
     var context = {};
     context.title = 'Championships'
     getChampionshipInfo(res, mysql, context, complete);
+    getWestTeams(res, mysql, context, complete);
+    getEastTeams(res, mysql, context, complete);
+    getTeams(res, mysql, context, complete);
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 1) {
+        if (callbackCount >= 4) {
             res.render('championships', context);
         }
     }
