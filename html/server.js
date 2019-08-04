@@ -63,9 +63,9 @@ app.get('/endorsements', function (req, res, next) {
 /////////////////////////
 // TEAMS PAGE REQUESTS //
 /////////////////////////
-
 /*TODO:
 INSERT FUNCTIONALITY
+UPDATE FUNCTIONALITY
 
 FINISHED:
 SELECT FUNCTIONALITY
