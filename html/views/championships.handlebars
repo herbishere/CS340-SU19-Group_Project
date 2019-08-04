@@ -10,7 +10,7 @@
             </fieldset>
             <fieldset>
                 <legend>Select Western Conference Champion</legend>
-                Team<select>
+                Team:<select name="west_teamID">
                     {{#each west_team}}
                     <option value={{west_id}}>{{west_team_name}}</option>
                     {{/each}}
@@ -19,7 +19,7 @@
             </fieldset>
             <fieldset>
                 <legend>Select Eastern Conference Champion</legend>
-                Team<select>
+                Team:<select name="east_teamID">
                     {{#each east_team}}
                     <option value={{east_id}}>{{east_team_name}}</option>
                     {{/each}}
@@ -28,7 +28,7 @@
             </fieldset>
             <fieldset>
                 Select Champion:
-                <select>
+                <select name="winner">
                     {{#each team}}
                     <option value={{team_id}}>{{team_name}}</option>
                     {{/each}}
