@@ -86,14 +86,6 @@ app.get('/teams', function (req, res, next) {
 /////////////////////////////////
 // CHAMPIONSHIPS PAGE REQUESTS //
 /////////////////////////////////
-/*TODO:
-INSERT FUNCTIONALITY
-UPDATE FUNCTIONALITY -- NOT NEEDED FOR MONDAY
-
-FINISHED:
-SELECT FUNCTIONALITY
-*/
-
 // This function gets all the championship information
 function getChampionshipInfo(res, mysql, context, complete) {
     mysql.pool.query("SELECT c.year, CONCAT(t1.team_city, ' ', t1.name) AS west_champ, c.west_record, CONCAT(t2.team_city, ' ', t2.name) AS east_champ, c.east_record, CONCAT(t3.team_city, ' ', t3.name) AS winner FROM nba_championships AS c INNER JOIN nba_teams AS t1 ON t1.id = c.west_teamID INNER JOIN nba_teams AS t2 ON t2.id = c.east_teamID INNER JOIN nba_teams AS t3 ON t3.id = c.winner", function (error, results, fields) {
@@ -142,6 +134,7 @@ function getTeams(res, mysql, context, complete) {
     });
 }
 
+// Load Web Page
 app.get('/championships', function (req, res) {
     var callbackCount = 0;
     var context = {};
@@ -159,6 +152,7 @@ app.get('/championships', function (req, res) {
     }
 });
 
+// Insert New Championship
 app.post('/championships', function (req, res) {
     var sql = "INSERT INTO `nba_championships` (`year`, `west_teamID`, `west_record`, `east_teamID`, `east_record`, `winner`) VALUES (?, ?, ?, ?, ?, ?)";
     var inserts = [req.body.year, req.body.west_teamID, req.body.west_record, req.body.east_teamID, req.body.east_record, req.body.winner];
