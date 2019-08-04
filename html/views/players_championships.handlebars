@@ -1,0 +1,22 @@
+<h1>Welcome to the Players / Championships Page!</h1>
+<h2>View Championships by Player</h2>
+<!-- DISPLAY ALL THE PLAYERS/CHAMPIONSHIPS IN A TABLE -->
+<div class="table display player_championship">
+    <h2>Championships</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each player}}
+            <tr>
+                <td>{{player_name}}</td>
+                <td>{{year}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
