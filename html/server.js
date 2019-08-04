@@ -167,7 +167,7 @@ SELECT FUNCTIONALITY
 INSERT FUNCTIONALITY
 */
 
-app.get('/player_championsips', function (req, res, next) {
+app.get('/player_championships', function (req, res, next) {
     var context = {};
     context.title = 'Players/Championships'
     res.render('players_championships', context);
