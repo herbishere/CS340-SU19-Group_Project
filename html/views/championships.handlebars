@@ -6,7 +6,7 @@
     <form id="addChampionship" action="/championships" method="post">
         <fieldset>
             <fieldset>
-                Year: <input type="number" name="year"><br>
+                Year: <input type="number" name="year" required><br>
             </fieldset>
             <fieldset>
                 <legend>Select Western Conference Champion</legend>
@@ -15,7 +15,7 @@
                     <option value={{west_id}}>{{west_team_name}}</option>
                     {{/each}}
                 </select><br>
-                Record: <input type="number" name="west_record"><br>
+                Record: <input type="number" name="west_record" required><br>
             </fieldset>
             <fieldset>
                 <legend>Select Eastern Conference Champion</legend>
@@ -24,7 +24,7 @@
                     <option value={{east_id}}>{{east_team_name}}</option>
                     {{/each}}
                 </select><br>
-                Record: <input type="number" name="east_record"><br>
+                Record: <input type="number" name="east_record" required><br>
             </fieldset>
             <fieldset>
                 Select Champion:
