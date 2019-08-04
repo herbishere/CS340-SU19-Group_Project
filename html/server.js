@@ -167,10 +167,28 @@ SELECT FUNCTIONALITY
 INSERT FUNCTIONALITY
 */
 
+function getPlayerChampionships(res, mysql, context, complete) {
+    mysql.pool.query("SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.player = results;
+        complete();
+    });
+}
+
 app.get('/player_championships', function (req, res, next) {
     var context = {};
-    context.title = 'Players/Championships'
-    res.render('players_championships', context);
+    context.title = 'Players/Championships';
+    getPlayerChampionships(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('players_championships', context);
+        }
+    }
 });
 
 ////////////////////

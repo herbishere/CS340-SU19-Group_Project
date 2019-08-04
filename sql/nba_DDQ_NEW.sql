@@ -230,7 +230,6 @@ INSERT INTO `player_championships` (`player_ID`, `championship_ID`) VALUES
 (123955, 2019),
 (93824, 2007),
 (93824, 2011),
-(93824, 2011),
 (93824, 2012),
 (93824, 2013),
 (93824, 2014),

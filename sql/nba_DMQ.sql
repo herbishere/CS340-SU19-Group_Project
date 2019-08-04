@@ -74,6 +74,9 @@ delete from endorsements where contractual_id = :contractualIDInput;
 
 select * from player_championships;
 
+-- get all the years and players from the players_championships table
+SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC
+
 select * from player_championships where championship_ID = :yearUserInput;
 
 insert into player_championships (player_ID, championship_ID) values (:playerID_Input, :championshipID_Input);
