@@ -1,7 +1,35 @@
 <h1>Welcome to the Championships Page!</h1>
 <p>View and Add Championships</p>
+<h2>Add a Championship</h2>
+<div class="form insert championship" action="/championship" method="post">
+    <form id="addChampionship">
+        Input Year: <input type="number" name="year"><br>
+        Select Western Conference Champion:
+        <select>
+            {{#each west_team}}
+            <option value={{west_id}}>{{west_team_name}}</option>
+            {{/each}}
+        </select><br>
+        Input Record: <input type="number" name="west_record"><br>
+        Select Eastern Conference Champion:
+        <select>
+            {{#each east_team}}
+            <option value={{east_id}}>{{east_team_name}}</option>
+            {{/each}}
+        </select><br>
+        Input Record: <input type="number" name="east_record"><br>
+        <input type="submit" value="Submit">
+        Select Champion:
+        <select>
+            {{#each team}}
+            <option value={{team_id}}>{{team_name}}</option>
+            {{/each}}
+        </select><br>
+    </form>
+</div>
 <h2>View Championships</h2>
-<div class="table">
+<!-- DISPLAY ALL THE CHAMPIONSHIPS IN A TABLE -->
+<div class="table display championship">
     <h2>Championships</h2>
     <table>
         <!-- TODO: POPULATE FROM QUERY RESULTS-->
