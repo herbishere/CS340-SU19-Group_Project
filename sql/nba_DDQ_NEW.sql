@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: classmysql.engr.oregonstate.edu:3306
--- Generation Time: Aug 03, 2019 at 01:50 PM
+-- Generation Time: Aug 04, 2019 at 02:14 PM
 -- Server version: 10.3.13-MariaDB-log
 -- PHP Version: 7.0.33
 
@@ -221,30 +221,29 @@ CREATE TABLE `player_championships` (
 --
 
 INSERT INTO `player_championships` (`player_ID`, `championship_ID`) VALUES
-(20384, 2019),
 (20384, 2014),
-(123955, 2015),
-(123955, 2016),
-(123955, 2017),
-(123955, 2018),
-(123955, 2019),
+(20384, 2019),
+(28132, 2012),
+(72935, 2006),
+(72935, 2011),
+(93252, 2006),
+(93252, 2012),
+(93252, 2013),
+(93421, 2016),
 (93824, 2007),
-(93824, 2011),
 (93824, 2011),
 (93824, 2012),
 (93824, 2013),
 (93824, 2014),
 (93824, 2015),
-(193411, 2018),
-(193411, 2019),
-(93421, 2016),
-(93252, 2006),
-(93252, 2012),
-(93252, 2013),
-(28132, 2012),
 (120452, 2012),
-(72935, 2006),
-(72935, 2011);
+(123955, 2015),
+(123955, 2016),
+(123955, 2017),
+(123955, 2018),
+(123955, 2019),
+(193411, 2018),
+(193411, 2019);
 
 -- --------------------------------------------------------
 
@@ -315,6 +314,7 @@ ALTER TABLE `nba_teams`
 -- Indexes for table `player_championships`
 --
 ALTER TABLE `player_championships`
+  ADD PRIMARY KEY (`player_ID`,`championship_ID`),
   ADD KEY `FK_playerID_championshps` (`player_ID`),
   ADD KEY `FK_championshipID_player` (`championship_ID`);
 

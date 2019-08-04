@@ -167,13 +167,34 @@ SELECT FUNCTIONALITY
 INSERT FUNCTIONALITY
 */
 
-app.get('/player_championsips', function (req, res, next) {
+function getPlayerChampionships(res, mysql, context, complete) {
+    mysql.pool.query("SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.player = results;
+        complete();
+    });
+}
+
+app.get('/player_championships', function (req, res, next) {
+    var callbackCount = 0;
     var context = {};
-    context.title = 'Players/Championships'
-    res.render('players/championships', context);
+    context.title = 'Players/Championships';
+    getPlayerChampionships(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('players_championships', context);
+        }
+    }
 });
 
+////////////////////
 // ERROR HANDLING //
+////////////////////
 
 app.use(function (req, res) {
     res.status(404);
