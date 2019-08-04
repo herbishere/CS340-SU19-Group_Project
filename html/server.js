@@ -159,6 +159,20 @@ app.get('/championships', function (req, res) {
     }
 });
 
+app.post('/championships', function (req, res) {
+    var sql = "INSERT INTO `nba_championships` (`year`, `west_teamID`, `west_record`, `east_teamID`, `east_record`, `winner`) VALUES (?, ?, ?, ?, ?, ?)";
+    var inserts = [req.body.year, req.body.west_teamID, req.body.west_record, req.body.east_teamID, req.body.east_record, req.body.winner];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/championships');
+        }
+    });
+});
+
 ////////////////////////////////////////
 /* PLAYER_CHAMPIONSHIPS PAGE REQUESTS */
 ////////////////////////////////////////
