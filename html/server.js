@@ -179,6 +179,7 @@ function getPlayerChampionships(res, mysql, context, complete) {
 }
 
 app.get('/player_championships', function (req, res, next) {
+    var callbackCount = 0;
     var context = {};
     context.title = 'Players/Championships';
     getPlayerChampionships(res, mysql, context, complete);
