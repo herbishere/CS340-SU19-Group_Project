@@ -27,11 +27,24 @@ app.get('/', function (req, res, next) {
     })
 });
 
+/* PLAYERS PAGE REQUESTS
+TODO:
+INSERT FUNCTIONALITY
+SELECT FUNCTIONALITY
+*/
+
 app.get('/players', function (req, res, next) {
     res.render('players', {
         title: 'Players'
     })
 });
+
+/* ENDORSEMENTS PAGE REQUESTS 
+TODO:
+INSERT FUNCTIONALITY
+SELECT FUNCTIONALITY
+DELETE FUNCTIONALITY
+*/
 
 app.get('/endorsements', function (req, res, next) {
     res.render('endorsements', {
@@ -39,6 +52,13 @@ app.get('/endorsements', function (req, res, next) {
     })
 });
 
+/* TEAMS PAGE REQUESTS
+TODO:
+INSERT FUNCTIONALITY
+
+FINISHED:
+SELECT FUNCTIONALITY
+*/
 app.get('/teams', function (req, res, next) {
     var context = {};
     mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (err, rows, fields) {
@@ -101,5 +121,5 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(app.get('port'), function () {
-    console.log('Express started on http://flip3.engr.oregonstate.edu:' + app.get('port') + '; press Ctrl-C to terminate.');
+    console.log('Express started on http://flip2.engr.oregonstate.edu:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
