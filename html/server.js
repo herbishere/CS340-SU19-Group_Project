@@ -173,7 +173,9 @@ app.get('/player_championsips', function (req, res, next) {
     res.render('players_championships', context);
 });
 
+////////////////////
 // ERROR HANDLING //
+////////////////////
 
 app.use(function (req, res) {
     res.status(404);
