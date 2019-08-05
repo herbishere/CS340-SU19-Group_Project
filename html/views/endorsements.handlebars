@@ -1,44 +1,65 @@
 <h1>Welcome to the Endorsements Page!</h1>
 
-
+<!--
 <div class='form'>
     <h3>SELECT ENDORSEMENT</h3>
     <form>
         <select name="endorsement">
-            <!--TODO POPULATE FROM DATABASE RESULTS -->
+
             <option value='Endorsement001'>Endorsement001</option>
             <option value='Endorsement002'>Endorsement002</option>
         </select>
         <input type="submit" value="Submit">
     </form>
 </div>
-
-<div class="table">
+-->
+<div class="table display endorsements">
+    <h2>Endorsements</h2>
     <table>
-        <!-- TODO: POPULATE FROM QUERY RESULTS-->
+        <thead>
         <tr>
             <th>Contractual ID</th>
             <th>Player ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Company Name</th>
             <th>Years Signed</th>
             <th>Salary</th>
         </tr>
+        </thead>
+        
+        <tbody>
+        {{#each endorsements}}
+        <tr>
+            <td>{{contractual_id}}</td>
+            <td>{{player_id}}</td>
+            <td>{{first_name}}</td>
+            <td>{{last_name}}</td>
+            <td>{{company_name}}</td>
+            <td>{{years_signed}}</td>
+            <td>{{salary}}</td>
+            </tr>  
+            {{/each}}
+        </tbody>
     </table>
 </div>
-<p>DESCRIPTION: ADD ENDORSEMENT</p>
-<div class='form'>
-    <form>
+<h3>ADD ENDORSEMENT</h3>
+<div class='form insert endorsement'>
+    <form id = "addEndorsement" action="/endorsements" method="post">
+        Contractual ID:
+        <input type='text' name="contractual_id" required>
+        <br>
         Player ID:
-        <input type='text'>
+        <input type='text' name="player_id" required>
         <br>
         Company Name:
-        <input type='text'>
+        <input type='text' name="company_name" required>
         <br>
         Years Signed:
-        <input type='text'>
+        <input type='number' min="1" max="100" name="years_signed" required>
         <br>
         Salary:
-        <input type='text'>
+        <input type='text' name="salary" required>
         <br>
         
         <input type="submit" value="Submit">
