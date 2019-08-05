@@ -1,5 +1,5 @@
 <h1>You are Currently Updating the {{team.team_city}} {{team.name}}</h1>
-<form id="team_update" action="/teams" method="post">
+<form id="team_update" action="/teams" method="put">
     <fieldset>
         <fieldset>
             City:<input type="text" name="team_city" required value="{{team.team_city}}"><br>
@@ -8,9 +8,9 @@
             Name:<input type="text" name="name" required value="{{team.name}}"><br>
         </fieldset>
         <fieldset>
-            <legend>Divison</legend>
+            <legend>Divison - Previously {{team.division}}</legend>
             {{#each division}}
-            <input type="radio" name="division" value={{division_name}}> {{division_name}}<br>
+            <input type="radio" name="division" value={{division_name}} required> {{division_name}}<br>
             {{/each}}
         </fieldset>
         <fieldset>
