@@ -141,13 +141,27 @@ UPDATE FUNCTIONALITY
 */
 
 // GET ALL THE TEAM INFORMATION
-function getTeamInfo(res, mysql, context, complete) {
+function getAllTeamsInfo(res, mysql, context, complete) {
     mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
         }
         context.team = results;
+        complete();
+    });
+}
+
+// GET SPECIFIC TEAM'S INFORMATION
+function getTeamInfo(res, mysql, context, id, complete) {
+    var sql = "SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams WHERE id = ?";
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.team = results[0];
         complete();
     });
 }
@@ -170,7 +184,7 @@ app.get('/teams', function (req, res, next) {
     var callbackCount = 0;
     var context = {};
     context.title = 'Teams'
-    getTeamInfo(res, mysql, context, complete);
+    getAllTeamsInfo(res, mysql, context, complete);
     getDivisionNames(res, mysql, context, complete);
 
     function complete() {
@@ -206,13 +220,14 @@ app.post('/teams', function (req, res) {
 // UPDATE FUNCTIONALITY
 app.get('/teams/:id', function (req, res) {
     callbackCount = 0;
-    var context = {}
-    context.title = "UPDATING TEAMS"
-    getDivisionNames(res, mysql, context, complete)
+    var context = {};
+    context.title = "UPDATING TEAMS";
+    getDivisionNames(res, mysql, context, complete);
+    getTeamInfo(res, mysql, context, req.params.id, complete);
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 1) {
+        if (callbackCount >= 2) {
             res.render('teams', context);
         }
     }
