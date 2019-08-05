@@ -1,13 +1,17 @@
 <h1>Welcome to the Team Page!</h1>
 <p>Description:</p>
 <p>View,Insert, and Update the Teams Information</p>
-<!-- Add a New Team-->
+<!-- ADD A NEW TEAM -->
 <div class="form insert team">
     <h2>Add a Team</h2>
     <form id="addTeam" action="/teams" method="post">
         <fieldset>
-            City:<input type="text" name="team_city" required><br>
-            Name:<input type="text" name="name" required><br>
+            <fieldset>
+                City:<input type="text" name="team_city" required><br>
+            </fieldset>
+            <fieldset>
+                Name:<input type="text" name="name" required><br>
+            </fieldset>
             <fieldset>
                 <legend>Divison</legend>
                 <input type="radio" name="division" value="Atlantic"> Atlantic<br>
@@ -17,8 +21,13 @@
                 <input type="radio" name="division" value="Pacific"> Pacific<br>
                 <input type="radio" name="division" value="Southwest"> Southwest<br>
             </fieldset>
-            Arena:<input type="text" name="arena" required><br>
-            Head Coach:<input type="text" name="head_coach" required><br>
+            <fieldset>
+                Arena:<input type="text" name="arena" required><br>
+            </fieldset>
+            <fieldset>
+                Head Coach:<input type="text" name="head_coach" required><br>
+            </fieldset>
+            <input type="submit" value="Submit">
         </fieldset>
     </form>
 </div>
