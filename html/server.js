@@ -228,7 +228,7 @@ app.get('/teams/:id', function (req, res) {
     function complete() {
         callbackCount++;
         if (callbackCount >= 2) {
-            res.render('teams', context);
+            res.render('teams_UPDATE', context);
         }
     }
 });
