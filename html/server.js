@@ -57,7 +57,7 @@ app.get('/players', function (req, res, next) {
     var context = {};
     context.title = 'Players'
     getPlayerInfo(res, mysql, context, complete);
-   
+
 
     function complete() {
         callbackCount++;
@@ -70,8 +70,8 @@ app.get('/players', function (req, res, next) {
 //INSERT FUNCTIONALITY
 app.post('/players', function (req, res) {
     var sql = "INSERT INTO `nba_players` (`first_name`, `last_name`, `team_ID`, `birthdate`, `points`, `school`,`position`,`player_year_start`,`last_year_active`) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
-  
-    var inserts = [req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school,req.body.position,req.body.player_year_start,req.body.last_year_active];
+
+    var inserts = [req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school, req.body.position, req.body.player_year_start, req.body.last_year_active];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
@@ -140,7 +140,8 @@ app.post('/endorsements', function (req, res) {
 UPDATE FUNCTIONALITY
 */
 
-function getTeamInfo(res, mysql, context, complete) {
+// GET ALL THE TEAM INFORMATION
+function getAllTeamsInfo(res, mysql, context, complete) {
     mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -151,6 +152,21 @@ function getTeamInfo(res, mysql, context, complete) {
     });
 }
 
+// GET SPECIFIC TEAM'S INFORMATION
+function getTeamInfo(res, mysql, context, id, complete) {
+    var sql = "SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams WHERE id = ?";
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.team = results[0];
+        complete();
+    });
+}
+
+// GET ALL THE DIVISIONS
 function getDivisionNames(res, mysql, context, complete) {
     mysql.pool.query('SELECT DISTINCT division as division_name FROM nba_teams', function (error, results, fields) {
         if (error) {
@@ -162,12 +178,13 @@ function getDivisionNames(res, mysql, context, complete) {
     });
 }
 
+// SELECT FUNCTIONALITY
 app.get('/teams', function (req, res, next) {
 
     var callbackCount = 0;
     var context = {};
     context.title = 'Teams'
-    getTeamInfo(res, mysql, context, complete);
+    getAllTeamsInfo(res, mysql, context, complete);
     getDivisionNames(res, mysql, context, complete);
 
     function complete() {
@@ -178,15 +195,19 @@ app.get('/teams', function (req, res, next) {
     }
 });
 
+// GET CONFERENCE BASED ON DIVISION
+function getConference(division) {
+    if (division == "Atlantic" || division == "Central" || division == "Southeast") {
+        return "Eastern";
+    } else {
+        return "Western";
+    }
+}
+
+// INSERT FUNCTIONALITY
 app.post('/teams', function (req, res) {
     var sql = "INSERT INTO `nba_teams` (`team_city`, `name`, `conference`, `division`, `arena`, `head_coach`) VALUES (?, ?, ?, ?, ?, ?)";
-    // CHOOSE CONFERENCE BASED ON DIVISION
-    var conference;
-    if (req.body.division == "Atlantic" || req.body.division == "Central" || req.body.division == "Southeast") {
-        conference = "Eastern"
-    } else {
-        conference = "Western"
-    }
+    var conference = getConference(req.body.division);
     var inserts = [req.body.team_city, req.body.name, conference, req.body.division, req.body.arena, req.body.head_coach];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
@@ -194,6 +215,40 @@ app.post('/teams', function (req, res) {
             res.write(JSON.stringify(error));
             res.end();
         } else {
+            res.redirect('/teams');
+        }
+    });
+});
+
+// UPDATE FUNCTIONALITY
+// Load the Update Page
+app.get('/teams/:id', function (req, res) {
+    callbackCount = 0;
+    var context = {};
+    context.title = "UPDATING TEAMS";
+    getDivisionNames(res, mysql, context, complete);
+    getTeamInfo(res, mysql, context, req.params.id, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('teams_UPDATE', context);
+        }
+    }
+});
+
+// Update Values Based On Form
+app.post('/teams/:id', function (req, res) {
+    var sql = "UPDATE `nba_teams` SET `team_city`=?, `name`=?, `conference`=?, `division`=?, `arena`=?, `head_coach`=? WHERE `id`=?";
+    var conference = getConference(req.body.division);
+    var inserts = [req.body.team_city, req.body.name, conference, req.body.division, req.body.arena, req.body.head_coach, req.params.id];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.status(200);
             res.redirect('/teams');
         }
     });
