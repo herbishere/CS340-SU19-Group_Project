@@ -54,6 +54,9 @@ select p.first_name,p.last_name,t.name
 from players p inner join nab_teams t on t.id = p.team_ID 
 where t.name = :teamNameInput;
 
+-- get id and player's full name
+SELECT id, CONCAT(first_name, ' ', last_name) as name FROM nba_players
+
 ---add a player
 
 insert into players (id,first_name,last_name,team_ID,birthdate,points,school,position,player_year_start,last_year_active)
@@ -80,7 +83,8 @@ SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_nam
 
 select * from player_championships where championship_ID = :yearUserInput;
 
-insert into player_championships (player_ID, championship_ID) values (:playerID_Input, :championshipID_Input);
+-- add a player and their championship year they attended
+INSERT INTO `player_championships` (`player_ID`, `championship_ID`) VALUES (?, ?)
 
 --------------------------------------------------------------------------------
 
@@ -89,6 +93,7 @@ select * from player_endorsements;
 select * from player_endorsements where player_ID = :playerIDUserInput;
 
 insert into player_endorsements (player_ID,endorsement_ID);
+
 
 
 
