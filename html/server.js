@@ -217,6 +217,7 @@ app.post('/championships', function (req, res) {
 INSERT FUNCTIONALITY
 */
 
+// get all the players who've attended championships, and the years of their championships
 function getPlayerChampionships(res, mysql, context, complete) {
     mysql.pool.query("SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC", function (error, results, fields) {
         if (error) {
@@ -228,6 +229,7 @@ function getPlayerChampionships(res, mysql, context, complete) {
     });
 }
 
+// get all the players who've atttended championships
 function getPlayerNames(res, mysql, context, complete) {
     mysql.pool.query("SELECT id, CONCAT(first_name, ' ', last_name) as name FROM nba_players", function (error, results, fields) {
         if (error) {
@@ -238,7 +240,6 @@ function getPlayerNames(res, mysql, context, complete) {
         complete();
     });
 }
-
 
 app.get('/player_championships', function (req, res, next) {
     var callbackCount = 0;
@@ -253,6 +254,21 @@ app.get('/player_championships', function (req, res, next) {
             res.render('players_championships', context);
         }
     }
+});
+
+// Insert a Player and a Championship
+app.post('/player_championships', function (req, res) {
+    var sql = "INSERT INTO `player_championships` (`player_ID`, `championship_ID`) VALUES (?, ?)";
+    var inserts = [req.body.player_ID, req.body.championship_ID];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/player_championships');
+        }
+    });
 });
 
 ////////////////////
