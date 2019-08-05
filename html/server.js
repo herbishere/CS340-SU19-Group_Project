@@ -239,7 +239,9 @@ app.get('/teams/:id', function (req, res) {
 
 // Update Values Based On Form
 app.put('/teams/:id', function (req, res) {
-    var sql = "UPDATE `nba_teams` SET `team_city` = ?, `name` = ?, `conference` = ?, `division` = ?, `arena` = ?, `head_coach` = ? WHERE `id` = ?";
+    console.log(req.body);
+    console.log(req.params.id);
+    var sql = "UPDATE `nba_teams` SET `team_city`=?, `name`=?, `conference`=?, `division`=?, `arena`=?, `head_coach`=? WHERE `id`=?";
     var conference = getConference(req.body.division);
     var inserts = [req.body.team_city, req.body.name, conference, req.body.division, req.body.arena, req.body.head_coach, req.params.id];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
@@ -249,7 +251,7 @@ app.put('/teams/:id', function (req, res) {
             res.end();
         } else {
             res.status(200);
-            res.redirect('/teams');
+            res.end();
         }
     });
 });
