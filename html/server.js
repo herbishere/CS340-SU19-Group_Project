@@ -238,7 +238,7 @@ app.get('/teams/:id', function (req, res) {
 });
 
 // Update Values Based On Form
-app.put('/teams/:id', function (req, res) {
+app.post('/teams/:id', function (req, res) {
     console.log(req.body);
     console.log(req.params.id);
     var sql = "UPDATE `nba_teams` SET `team_city`=?, `name`=?, `conference`=?, `division`=?, `arena`=?, `head_coach`=? WHERE `id`=?";
