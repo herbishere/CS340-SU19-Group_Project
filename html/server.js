@@ -64,7 +64,6 @@ app.get('/endorsements', function (req, res, next) {
 // TEAMS PAGE REQUESTS //
 /////////////////////////
 /*TODO:
-INSERT FUNCTIONALITY
 UPDATE FUNCTIONALITY
 */
 
@@ -215,7 +214,6 @@ app.post('/championships', function (req, res) {
 /* PLAYER_CHAMPIONSHIPS PAGE REQUESTS */
 ////////////////////////////////////////
 /*TODO:
-SELECT FUNCTIONALITY
 INSERT FUNCTIONALITY
 */
 
@@ -230,15 +228,28 @@ function getPlayerChampionships(res, mysql, context, complete) {
     });
 }
 
+function getPlayerNames(res, mysql, context, complete) {
+    mysql.pool.query("SELECT id, CONCAT(first_name, ' ', last_name) as name FROM nba_players", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.player_row = results;
+        complete();
+    });
+}
+
+
 app.get('/player_championships', function (req, res, next) {
     var callbackCount = 0;
     var context = {};
     context.title = 'Players/Championships';
     getPlayerChampionships(res, mysql, context, complete);
+    getPlayerNames(res, mysql, context, complete)
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 1) {
+        if (callbackCount >= 2) {
             res.render('players_championships', context);
         }
     }

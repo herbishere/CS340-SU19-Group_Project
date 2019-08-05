@@ -1,4 +1,23 @@
 <h1>Welcome to the Players / Championships Page!</h1>
+<h2>Add a Player to a Championship Game</h2>
+<div class="form insert player_championship">
+    <form action="/player_championships" method="post">
+        <fieldset>
+            <fieldset>
+                Year<input type="number" name="championship_ID">
+            </fieldset>
+            <fieldset>
+                Player:<select name="player_ID">
+                    {{#each player_row}}
+                    <option value={{id}}>{{name}}</option>
+                    {{/each}}
+                </select>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+</div>
+</div>
 <h2>View Championships by Player</h2>
 <!-- DISPLAY ALL THE PLAYERS/CHAMPIONSHIPS IN A TABLE -->
 <div class="table display player_championship">
