@@ -35,29 +35,102 @@ app.get('/', function (req, res, next) {
 // PLAYERS PAGE REQUESTS //
 ///////////////////////////
 /*TODO:
-INSERT FUNCTIONALITY
+
 SELECT FUNCTIONALITY
 */
+function getPlayerInfo(res, mysql, context, complete) {
+    mysql.pool.query('SELECT id, first_name,last_name, team_ID, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players', function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.player = results;
+        complete();
+    });
+}
+
+
 
 app.get('/players', function (req, res, next) {
-    var context = {}
+
+    var callbackCount = 0;
+    var context = {};
     context.title = 'Players'
-    res.render('players', context)
+    getPlayerInfo(res, mysql, context, complete);
+   
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('teams', context);
+        }
+    }
 });
+
+//INSERT FUNCTIONALITY
+app.post('/players', function (req, res) {
+    var sql = "INSERT INTO `nba_players` (`first_name`, `last_name`, `team_ID`, `birthdate`, `points`, `school`,`position`,`player_year_start`,`last_year_active`) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
+  
+    var inserts = [req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school,req.body.position,req.body.player_year_start,req.body.last_year_active];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/players');
+        }
+    });
+});
+
 
 ////////////////////////////////
 // ENDORSEMENTS PAGE REQUESTS //
 ////////////////////////////////
+
+function getEndorsementInfo(res, mysql, context, complete) {
+    mysql.pool.query("SELECT e.contractual_id,e.player_id,p.first_name,p.last_name,e.company_name,e.years_signed,e.salary FROM nba_endorsements e INNER JOIN nba_players on e.player_id = p.id", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.endorsements = results;
+        complete();
+    });
+}
+
+//loads data when page is loaded
+app.get('/endorsements', function (req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.title = 'Endorsements'
+    getEndorsementInfo(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('endorsements', context);
+        }
+    }
+});
 /*TODO:
 INSERT FUNCTIONALITY
 SELECT FUNCTIONALITY
 DELETE FUNCTIONALITY -- NOT NEEDED FOR MONDAY
 */
 
-app.get('/endorsements', function (req, res, next) {
-    var context = {}
-    context.title = 'Endorsements'
-    res.render('endorsements', context)
+app.post('/endorsements', function (req, res) {
+    var sql = "INSERT INTO `nba_endorsements` (`contractual_id`, `player_id`, `company_name`, `years_signed`, `salary`) VALUES (?, ?, ?, ?, ?)";
+    var inserts = [req.body.contractual_id, req.body.player_id, req.body.company_name, req.body.years_signed, req.body.salary];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/endorsements');
+        }
+    });
 });
 
 /////////////////////////
@@ -243,6 +316,36 @@ app.get('/player_championships', function (req, res, next) {
         }
     }
 });
+/////////////////////////////////////////////////
+/*player_endoresement
+///////////////////////////////////////////////*/
+
+function getPlayerEndorsements(res, mysql, context, complete) {
+    mysql.pool.query("SELECT pe.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID ", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.playerEndorsements = results;
+        complete();
+    });
+}
+
+
+app.get('/player_endorsements', function (req, res, next) {
+    var callbackCount = 0;
+    var context = {};
+    context.title = 'Players/Endorsements';
+    getPlayerEndorsements(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('players_endorsements', context);
+        }
+    }
+});
+
 
 ////////////////////
 // ERROR HANDLING //
