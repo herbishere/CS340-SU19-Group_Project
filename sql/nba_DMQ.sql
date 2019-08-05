@@ -14,9 +14,11 @@ SELECT id AS east_id, CONCAT(team_city, ' ', name) AS east_team_name FROM nba_te
 -- get all the teams
 SELECT id AS team_id, CONCAT(team_city, ' ', name) AS team_name FROM nba_teams
 
+-- get all the division names
+SELECT DISTINCT division as division_name FROM nba_teams
+
 -- add a new team
-INSERT INTO nba_teams (team_city, name, conference, division, arena, head_coach) 
-VALUES (:cityInput, :nameInput, :conferenceInput, :divisionInput, :arenaInput, :coachInput)
+INSERT INTO `nba_teams` (`team_city`, `name`, `conference`, `division`, `arena`, `head_coach`) VALUES (?, ?, ?, ?, ?, ?)
 
 -- update a team's data based on submission
 UPDATE nba_teams SET team_city = :cityInput, name = :nameInput, conference = :conferenceInput, division = :divisionInput, arena = :arenaInput, head_coach = :coachInput
@@ -36,8 +38,7 @@ INNER JOIN nba_teams AS t2 ON t2.id = c.east_teamID
 INNER JOIN nba_teams AS t3 ON t3.id = c.winner
 
 --- add a new championship
-INSERT INTO nba_championships (year, west_teamID, west_record, east_teamID, east_record, winner)
-VALUES (:yearInput, :westInput, :westRecInput, :eastInput, :eastRecInput, :winnerInput)
+INSERT INTO `nba_championships` (`year`, `west_teamID`, `west_record`, `east_teamID`, `east_record`, `winner`) VALUES (?, ?, ?, ?, ?, ?)
 
 
 

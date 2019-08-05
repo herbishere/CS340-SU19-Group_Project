@@ -1,6 +1,6 @@
 <h1>Welcome to the Team Page!</h1>
 <p>Description:</p>
-<p>View,Insert, and Update the Teams Information</p>
+<p>View, Insert, and Update the Teams Information</p>
 <!-- ADD A NEW TEAM -->
 <div class="form insert team">
     <h2>Add a Team</h2>
@@ -14,12 +14,9 @@
             </fieldset>
             <fieldset>
                 <legend>Divison</legend>
-                <input type="radio" name="division" value="Atlantic"> Atlantic<br>
-                <input type="radio" name="division" value="Central"> Central<br>
-                <input type="radio" name="division" value="Southeast"> Southeast<br>
-                <input type="radio" name="division" value="Northwest"> Northwest<br>
-                <input type="radio" name="division" value="Pacific"> Pacific<br>
-                <input type="radio" name="division" value="Southwest"> Southwest<br>
+                {{#each division}}
+                <input type="radio" name="division" value={{division_name}}> {{division_name}}<br>
+                {{/each}}
             </fieldset>
             <fieldset>
                 Arena:<input type="text" name="arena" required><br>

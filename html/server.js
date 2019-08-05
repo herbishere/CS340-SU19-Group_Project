@@ -66,21 +66,44 @@ app.get('/endorsements', function (req, res, next) {
 /*TODO:
 INSERT FUNCTIONALITY
 UPDATE FUNCTIONALITY
-
-FINISHED:
-SELECT FUNCTIONALITY
 */
-app.get('/teams', function (req, res, next) {
-    var context = {};
-    mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (err, rows, fields) {
-        if (err) {
-            next(err);
-            return;
+
+function getTeamInfo(res, mysql, context, complete) {
+    mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
         }
-        context.team = rows;
-        context.title = 'Teams'
-        res.render('teams', context);
+        context.team = results;
+        complete();
     });
+}
+
+function getDivisionNames(res, mysql, context, complete) {
+    mysql.pool.query('SELECT DISTINCT division as division_name FROM nba_teams', function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.division = results;
+        complete();
+    });
+}
+
+app.get('/teams', function (req, res, next) {
+
+    var callbackCount = 0;
+    var context = {};
+    context.title = 'Teams'
+    getTeamInfo(res, mysql, context, complete);
+    getDivisionNames(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('teams', context);
+        }
+    }
 });
 
 app.post('/teams', function (req, res) {
