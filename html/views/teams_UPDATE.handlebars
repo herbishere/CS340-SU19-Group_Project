@@ -1,11 +1,11 @@
-<h1>You are Currently Updating the {{team.team_city}} {{team.team_name}}</h1>
+<h1>You are Currently Updating the {{team_city}} {{team_name}}</h1>
 <form id="team_update" action="/teams" method="post">
     <fieldset>
         <fieldset>
-            City:<input type="text" name="team_city" required value="{{team.team_city}}"><br>
+            City:<input type="text" name="team_city" required value="{{team_city}}"><br>
         </fieldset>
         <fieldset>
-            Name:<input type="text" name="name" required value="{{team.name}}"><br>
+            Name:<input type="text" name="name" required value="{{name}}"><br>
         </fieldset>
         <fieldset>
             <legend>Divison</legend>
@@ -14,10 +14,10 @@
             {{/each}}
         </fieldset>
         <fieldset>
-            Arena:<input type="text" name="arena" required value="{{team.arena}}"><br>
+            Arena:<input type="text" name="arena" required value="{{arena}}"><br>
         </fieldset>
         <fieldset>
-            Head Coach:<input type="text" name="head_coach" required value="{{team.head_coach}}"><br>
+            Head Coach:<input type="text" name="head_coach" required value="{{head_coach}}"><br>
         </fieldset>
         <input type="submit" value="Submit">
     </fieldset>
