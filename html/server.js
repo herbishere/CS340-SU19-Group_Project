@@ -207,7 +207,15 @@ app.post('/teams', function (req, res) {
 app.get('/teams/:id', function (req, res) {
     callbackCount = 0;
     var context = {}
-    res.render('teams_UPDATE');
+    context.title = "UPDATING TEAMS"
+    getDivisionNames(res, mysql, context, complete)
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('teams', context);
+        }
+    }
 });
 
 /////////////////////////////////
