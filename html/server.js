@@ -195,16 +195,19 @@ app.get('/teams', function (req, res, next) {
     }
 });
 
+// GET CONFERENCE BASED ON DIVISION
+function getConference(division) {
+    if (division == "Atlantic" || division == "Central" || division == "Southeast") {
+        return "Eastern";
+    } else {
+        return "Western";
+    }
+}
+
 // INSERT FUNCTIONALITY
 app.post('/teams', function (req, res) {
     var sql = "INSERT INTO `nba_teams` (`team_city`, `name`, `conference`, `division`, `arena`, `head_coach`) VALUES (?, ?, ?, ?, ?, ?)";
-    // CHOOSE CONFERENCE BASED ON DIVISION
-    var conference;
-    if (req.body.division == "Atlantic" || req.body.division == "Central" || req.body.division == "Southeast") {
-        conference = "Eastern"
-    } else {
-        conference = "Western"
-    }
+    var conference = getConference(req.body.division);
     var inserts = [req.body.team_city, req.body.name, conference, req.body.division, req.body.arena, req.body.head_coach];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
@@ -218,6 +221,7 @@ app.post('/teams', function (req, res) {
 });
 
 // UPDATE FUNCTIONALITY
+// Load the Update Page
 app.get('/teams/:id', function (req, res) {
     callbackCount = 0;
     var context = {};
@@ -231,6 +235,23 @@ app.get('/teams/:id', function (req, res) {
             res.render('teams_UPDATE', context);
         }
     }
+});
+
+// Update Values Based On Form
+app.put('/teams/:id', function (req, res) {
+    var sql = "UPDATE `nba_teams` SET `team_city` = ?, `name` = ?, `conference` = ?, `division` = ?, `arena` = ?, `head_coach` = ? WHERE `id` = ?";
+    var conference = getConference(req.body.division);
+    var inserts = [req.body.team_city, req.body.name, conference, req.body.division, req.body.arena, req.body.head_coach, req.params.id];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.status(200);
+            res.redirect('/teams');
+        }
+    });
 });
 
 /////////////////////////////////
