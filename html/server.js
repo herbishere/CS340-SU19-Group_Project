@@ -57,7 +57,7 @@ app.get('/players', function (req, res, next) {
     var context = {};
     context.title = 'Players'
     getPlayerInfo(res, mysql, context, complete);
-   
+
 
     function complete() {
         callbackCount++;
@@ -70,8 +70,8 @@ app.get('/players', function (req, res, next) {
 //INSERT FUNCTIONALITY
 app.post('/players', function (req, res) {
     var sql = "INSERT INTO `nba_players` (`first_name`, `last_name`, `team_ID`, `birthdate`, `points`, `school`,`position`,`player_year_start`,`last_year_active`) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
-  
-    var inserts = [req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school,req.body.position,req.body.player_year_start,req.body.last_year_active];
+
+    var inserts = [req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school, req.body.position, req.body.player_year_start, req.body.last_year_active];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
@@ -140,6 +140,7 @@ app.post('/endorsements', function (req, res) {
 UPDATE FUNCTIONALITY
 */
 
+// GET ALL THE TEAM INFORMATION
 function getTeamInfo(res, mysql, context, complete) {
     mysql.pool.query('SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams', function (error, results, fields) {
         if (error) {
@@ -151,6 +152,7 @@ function getTeamInfo(res, mysql, context, complete) {
     });
 }
 
+// GET ALL THE DIVISIONS
 function getDivisionNames(res, mysql, context, complete) {
     mysql.pool.query('SELECT DISTINCT division as division_name FROM nba_teams', function (error, results, fields) {
         if (error) {
@@ -162,6 +164,7 @@ function getDivisionNames(res, mysql, context, complete) {
     });
 }
 
+// SELECT FUNCTIONALITY
 app.get('/teams', function (req, res, next) {
 
     var callbackCount = 0;
@@ -178,6 +181,7 @@ app.get('/teams', function (req, res, next) {
     }
 });
 
+// INSERT FUNCTIONALITY
 app.post('/teams', function (req, res) {
     var sql = "INSERT INTO `nba_teams` (`team_city`, `name`, `conference`, `division`, `arena`, `head_coach`) VALUES (?, ?, ?, ?, ?, ?)";
     // CHOOSE CONFERENCE BASED ON DIVISION
@@ -197,6 +201,13 @@ app.post('/teams', function (req, res) {
             res.redirect('/teams');
         }
     });
+});
+
+// UPDATE FUNCTIONALITY
+app.get('/teams/:id', function (req, res) {
+    callbackCount = 0;
+    var context = {}
+    res.render('teams_UPDATE');
 });
 
 /////////////////////////////////
