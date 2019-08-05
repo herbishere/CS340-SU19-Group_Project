@@ -137,7 +137,6 @@ app.post('/endorsements', function (req, res) {
 // TEAMS PAGE REQUESTS //
 /////////////////////////
 /*TODO:
-INSERT FUNCTIONALITY
 UPDATE FUNCTIONALITY
 */
 
@@ -288,10 +287,10 @@ app.post('/championships', function (req, res) {
 /* PLAYER_CHAMPIONSHIPS PAGE REQUESTS */
 ////////////////////////////////////////
 /*TODO:
-SELECT FUNCTIONALITY
 INSERT FUNCTIONALITY
 */
 
+// get all the players who've attended championships, and the years of their championships
 function getPlayerChampionships(res, mysql, context, complete) {
     mysql.pool.query("SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC", function (error, results, fields) {
         if (error) {
@@ -303,15 +302,28 @@ function getPlayerChampionships(res, mysql, context, complete) {
     });
 }
 
+// get all the players who've atttended championships
+function getPlayerNames(res, mysql, context, complete) {
+    mysql.pool.query("SELECT id, CONCAT(first_name, ' ', last_name) as name FROM nba_players", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.player_row = results;
+        complete();
+    });
+}
+
 app.get('/player_championships', function (req, res, next) {
     var callbackCount = 0;
     var context = {};
     context.title = 'Players/Championships';
     getPlayerChampionships(res, mysql, context, complete);
+    getPlayerNames(res, mysql, context, complete)
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 1) {
+        if (callbackCount >= 2) {
             res.render('players_championships', context);
         }
     }
@@ -346,6 +358,21 @@ app.get('/player_endorsements', function (req, res, next) {
     }
 });
 
+
+// Insert a Player and a Championship
+app.post('/player_championships', function (req, res) {
+    var sql = "INSERT INTO `player_championships` (`player_ID`, `championship_ID`) VALUES (?, ?)";
+    var inserts = [req.body.player_ID, req.body.championship_ID];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/player_championships');
+        }
+    });
+});
 
 ////////////////////
 // ERROR HANDLING //
