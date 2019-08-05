@@ -218,7 +218,7 @@ app.post('/teams', function (req, res) {
 });
 
 // UPDATE FUNCTIONALITY
-app.get('/team_update/:id', function (req, res) {
+app.get('/teams/:id', function (req, res) {
     callbackCount = 0;
     var context = {};
     context.title = "UPDATING TEAMS";
