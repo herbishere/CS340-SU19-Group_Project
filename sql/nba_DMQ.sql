@@ -17,6 +17,9 @@ SELECT id AS team_id, CONCAT(team_city, ' ', name) AS team_name FROM nba_teams
 -- get all the division names
 SELECT DISTINCT division as division_name FROM nba_teams
 
+-- get specific teams information
+SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams WHERE id = ?
+
 -- add a new team
 INSERT INTO `nba_teams` (`team_city`, `name`, `conference`, `division`, `arena`, `head_coach`) VALUES (?, ?, ?, ?, ?, ?)
 
