@@ -365,16 +365,28 @@ function getPlayerNames(res, mysql, context, complete) {
     });
 }
 
+function getChampionshipYears(res, mysql, context, complete) {
+    mysql.pool.query("SELECT DISTINCT year AS championship_ID FROM nba_championships ORDER BY year DESC", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.championship = results;
+        complete();
+    });
+}
+
 app.get('/player_championships', function (req, res, next) {
     var callbackCount = 0;
     var context = {};
     context.title = 'Players/Championships';
     getPlayerChampionships(res, mysql, context, complete);
     getPlayerNames(res, mysql, context, complete)
+    getChampionshipYears(res, mysql, context, complete)
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 2) {
+        if (callbackCount >= 3) {
             res.render('players_championships', context);
         }
     }

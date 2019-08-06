@@ -4,10 +4,13 @@
     <form action="/player_championships" method="post">
         <fieldset>
             <fieldset>
-                Year:<input type="number" name="championship_ID">
+                Available Years:<select name="championship_ID">
+                    {{#each championship}
+                    <option value={{championship_ID}}>{{championship_ID}}</option>
+                    {{/each}}
             </fieldset>
             <fieldset>
-                Player:<select name="player_ID">
+                Available Players:<select name="player_ID">
                     {{#each player_row}}
                     <option value={{id}}>{{name}}</option>
                     {{/each}}
