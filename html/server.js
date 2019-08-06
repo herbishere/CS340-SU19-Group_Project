@@ -448,7 +448,7 @@ app.get('/player_endorsements', function (req, res, next) {
     function complete() {
         callbackCount++;
         if (callbackCount >= 1) {
-            res.render('players_endorsements', context);
+            res.render('player_endorsements', context);
         }
     }
 });
