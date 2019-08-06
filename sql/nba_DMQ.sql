@@ -58,6 +58,9 @@ INNER JOIN nba_teams AS t1 ON t1.id = c.west_teamID
 INNER JOIN nba_teams AS t2 ON t2.id = c.east_teamID
 INNER JOIN nba_teams AS t3 ON t3.id = c.winner
 
+-- get all the years for available championships
+SELECT DISTINCT year AS championship_ID FROM nba_championships ORDER BY year DESC
+
 --
 --INSERT FUNCTION--
 --

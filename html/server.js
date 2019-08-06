@@ -365,16 +365,28 @@ function getPlayerNames(res, mysql, context, complete) {
     });
 }
 
+function getChampionshipYears(res, mysql, context, complete) {
+    mysql.pool.query("SELECT DISTINCT year AS championship_ID FROM nba_championships ORDER BY year DESC", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.championship = results;
+        complete();
+    });
+}
+
 app.get('/player_championships', function (req, res, next) {
     var callbackCount = 0;
     var context = {};
     context.title = 'Players/Championships';
     getPlayerChampionships(res, mysql, context, complete);
     getPlayerNames(res, mysql, context, complete)
+    getChampionshipYears(res, mysql, context, complete)
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 2) {
+        if (callbackCount >= 3) {
             res.render('players_championships', context);
         }
     }
@@ -411,9 +423,9 @@ app.delete('/player_championships/year/:champID/playerID/:playID', function (req
     })
 });
 
-/////////////////////////////////////////////////
-/*player_endoresement
-///////////////////////////////////////////////*/
+////////////////////////////////////
+/*PLAYER_ENDORSEMENT PAGE REQUESTS*/
+////////////////////////////////////
 
 function getPlayerEndorsements(res, mysql, context, complete) {
     mysql.pool.query("SELECT pe.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID ", function (error, results, fields) {
@@ -440,6 +452,7 @@ app.get('/player_endorsements', function (req, res, next) {
         }
     }
 });
+
 ////////////////////
 // ERROR HANDLING //
 ////////////////////
@@ -457,5 +470,5 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(app.get('port'), function () {
-    console.log('Express started on http://flip2.engr.oregonstate.edu:' + app.get('port') + '; press Ctrl-C to terminate.');
+    console.log('Express started on http://flip3.engr.oregonstate.edu:' + app.get('port') + '; press Ctrl-C to terminate.');
 });

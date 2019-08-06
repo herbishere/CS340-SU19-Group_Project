@@ -115,13 +115,13 @@ INSERT INTO `nba_endorsements` (`contractual_id`, `player_id`, `company_name`, `
 
 CREATE TABLE `nba_players` (
   `id` int(11) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `team_ID` int(11) NOT NULL,
   `birthdate` date NOT NULL,
   `points` int(11) NOT NULL,
-  `school` varchar(100) NOT NULL,
-  `position` varchar(100) NOT NULL,
+  `school` varchar(255) NOT NULL,
+  `position` varchar(30) NOT NULL,
   `player_year_start` int(11) NOT NULL,
   `last_year_active` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
