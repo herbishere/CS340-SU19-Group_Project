@@ -61,7 +61,7 @@ app.get('/players', function (req, res, next) {
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 2) {
+        if (callbackCount >= 1) {
             res.render('players', context);
         }
     }
