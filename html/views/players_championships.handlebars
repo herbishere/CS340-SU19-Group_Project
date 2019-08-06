@@ -34,8 +34,10 @@
             <tr class="{{year}} {{player_name}}">
                 <td>{{year}}</td>
                 <td>{{player_name}}</td>
+                <td><button onclick="deletePlayerChampionship({{year}},{{player_ID}})">DELETE</button></td>
             </tr>
             {{/each}}
         </tbody>
     </table>
 </div>
+<script src="/js/deletePlayerChampion.js"></script>
