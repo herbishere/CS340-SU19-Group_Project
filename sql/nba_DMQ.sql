@@ -74,9 +74,8 @@ INSERT INTO `nba_championships` (`year`, `west_teamID`, `west_record`, `east_tea
 -------------------------------------------------------------------------------------------------------------------------------------------
 ---get all of the the player data
 
-select * from players;
+SELECT id, first_name,last_name, team_ID, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players;
 
-select * from players where points <= :pointsInput;
 
 select p.first_name,p.last_name,t.name 
 from players p inner join nab_teams t on t.id = p.team_ID 
@@ -94,7 +93,7 @@ values (:IdInput,:firstNameInput,:lastNameInput,:teamIDInput,:birthdateInput,:po
 ---------------------------------------------------------------------------------------------------------------------------------------
 --get all of the endorsements info
 
-select * from endorsements;
+SELECT e.contractual_id,e.player_id,p.first_name,p.last_name,e.company_name,e.years_signed,e.salary FROM nba_endorsements  as e INNER JOIN nba_players as p on e.player_id = p.id
 
 select e.company_name,p.first_name,e.salary 
 from endorsements e inner join players p on p.id = e.player_ID
