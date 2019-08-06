@@ -1,6 +1,10 @@
----
---- TEAM ENTITY DATABASE MANIPULATION QUERIES
----
+--=========================================--
+--TEAM ENTITY DATABASE MANIPULATION QUERIES--
+--=========================================--
+
+-------------------
+--SELECT FUNCTION--
+-------------------
 
 -- get all the team's information in the table
 SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams
@@ -20,15 +24,29 @@ SELECT DISTINCT division as division_name FROM nba_teams
 -- get specific teams information
 SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams WHERE id = ?
 
+-------------------
+--INSERT FUNCTION--
+-------------------
+
 -- add a new team
 INSERT INTO `nba_teams` (`team_city`, `name`, `conference`, `division`, `arena`, `head_coach`) VALUES (?, ?, ?, ?, ?, ?)
+
+-------------------
+--UPDATE FUNCTION--
+-------------------
 
 -- update a team's data based on submission
 UPDATE `nba_teams` SET `team_city`=?, `name`=?, `conference`=?, `division`=?, `arena`=?, `head_coach`=? WHERE `id`=?
 
----
---- CHAMPIONSHIP ENTITY DATA MANIPULATION QUERIES
----
+-------------------------------------------------------------------------------------------------------------------------------
+
+--=============================================--
+--CHAMPIONSHIP ENTITY DATA MANIPULATION QUERIES--
+--=============================================--
+
+--
+--SELECT FUNCTION--
+--
 
 --- get championship information with team names
 SELECT c.year,
@@ -39,6 +57,10 @@ FROM nba_championships AS c
 INNER JOIN nba_teams AS t1 ON t1.id = c.west_teamID
 INNER JOIN nba_teams AS t2 ON t2.id = c.east_teamID
 INNER JOIN nba_teams AS t3 ON t3.id = c.winner
+
+--
+--INSERT FUNCTION--
+--
 
 --- add a new championship
 INSERT INTO `nba_championships` (`year`, `west_teamID`, `west_record`, `east_teamID`, `east_record`, `winner`) VALUES (?, ?, ?, ?, ?, ?)
@@ -79,15 +101,30 @@ delete from endorsements where contractual_id = :contractualIDInput;
 
 -------------------------------------------------------------------------
 
-select * from player_championships;
+--====================================================--
+--PLAYER/CHAMPIONSHIP ENTITY DATA MANIPULATION QUERIES--
+--====================================================--
 
--- get all the years and players from the players_championships table
-SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC
+-------------------
+--SELECT FUNCTION--
+-------------------
 
-select * from player_championships where championship_ID = :yearUserInput;
+-- get all the years, player ID's, and players' names from the players_championships table
+SELECT championship_ID as year, player_ID, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC
+
+-------------------
+--INSERT FUNCTION--
+-------------------
 
 -- add a player and their championship year they attended
 INSERT INTO `player_championships` (`player_ID`, `championship_ID`) VALUES (?, ?)
+
+-------------------
+--DELETE FUNCTION--
+-------------------
+
+-- delete player championship relationship
+DELETE FROM `player_championships` WHERE `player_ID`=? AND `championship_ID`=?
 
 --------------------------------------------------------------------------------
 
