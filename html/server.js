@@ -396,6 +396,8 @@ app.post('/player_championships', function (req, res) {
 });
 
 app.delete('/player_championships/year/:champID/playerID/:playID', function (req, res) {
+    console.log(req.params.playID);
+    console.log(req.params.champID);
     var sql = "DELETE FROM `player_championships` WHERE `player_ID`=? AND championship_ID`=?";
     var inserts = [req.params.playID, req.params.champID];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
