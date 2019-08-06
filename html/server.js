@@ -62,7 +62,7 @@ app.get('/players', function (req, res, next) {
     function complete() {
         callbackCount++;
         if (callbackCount >= 2) {
-            res.render('teams', context);
+            res.render('players', context);
         }
     }
 });
@@ -89,7 +89,7 @@ app.post('/players', function (req, res) {
 ////////////////////////////////
 
 function getEndorsementInfo(res, mysql, context, complete) {
-    mysql.pool.query("SELECT e.contractual_id,e.player_id,p.first_name,p.last_name,e.company_name,e.years_signed,e.salary FROM nba_endorsements e INNER JOIN nba_players on e.player_id = p.id", function (error, results, fields) {
+    mysql.pool.query("SELECT e.contractual_id,e.player_id,p.first_name,p.last_name,e.company_name,e.years_signed,e.salary FROM nba_endorsements  as e INNER JOIN nba_players as p on e.player_id = p.id", function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
