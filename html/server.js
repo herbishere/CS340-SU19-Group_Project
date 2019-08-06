@@ -411,9 +411,9 @@ app.delete('/player_championships/year/:champID/playerID/:playID', function (req
     })
 });
 
-/////////////////////////////////////////////////
-/*player_endoresement
-///////////////////////////////////////////////*/
+////////////////////////////////////
+/*PLAYER_ENDORSEMENT PAGE REQUESTS*/
+////////////////////////////////////
 
 function getPlayerEndorsements(res, mysql, context, complete) {
     mysql.pool.query("SELECT pe.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID ", function (error, results, fields) {
@@ -440,6 +440,7 @@ app.get('/player_endorsements', function (req, res, next) {
         }
     }
 });
+
 ////////////////////
 // ERROR HANDLING //
 ////////////////////
