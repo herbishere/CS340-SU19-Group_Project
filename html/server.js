@@ -347,7 +347,7 @@ INSERT FUNCTIONALITY
 
 // get all the players who've attended championships, and the years of their championships
 function getPlayerChampionships(res, mysql, context, complete) {
-    mysql.pool.query("SELECT championship_ID as year, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC", function (error, results, fields) {
+    mysql.pool.query("SELECT championship_ID as year, player_ID, CONCAT(first_name, ' ', last_name) AS player_name FROM player_championships as pc INNER JOIN nba_players as p ON p.id = pc.player_ID ORDER BY year DESC", function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
@@ -427,6 +427,20 @@ app.post('/player_championships', function (req, res) {
             res.redirect('/player_championships');
         }
     });
+});
+
+app.delete('/player_championships/year/:champID/playerID/:playID', function(req, res){
+    var sql = "DELETE FROM `player_championships` WHERE `player_ID`=? AND championship_ID`=?";
+    var inserts = [req.params.playID,req.params.champID];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields){
+        if (error){
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        } else {
+            res.status(202).end();
+        }
+    })
 });
 
 ////////////////////
