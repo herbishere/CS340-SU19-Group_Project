@@ -448,7 +448,7 @@ function getPlayerEndorsements(res, mysql, context, complete) {
 }
 
 function getSpecificEndorsements(res, mysql, context, complete) {
-    mysql.pool.query('SELECT contractual_id, player_id,company_name FROM nba_endorsements', function (error, results, fields) {
+    mysql.pool.query('SELECT e.contractual_id, e.player_id,e.company_name,(p.first_name,p.last_name) as player_name FROM nba_endorsements as e INNER JOIN nba_players as p on p.id = e.player_id', function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();

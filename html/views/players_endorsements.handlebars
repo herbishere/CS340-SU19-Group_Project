@@ -36,14 +36,14 @@
         
         <select name ="endorsement_ID">
             {{#each specificEndorsements}}
-            <option value = {{contractual_id}}>{{contractual_id}}-{{company_name}}</option>
+            <option value = {{contractual_id}}>{{player_name}}-{{company_name}}</option>
             {{/each}}
         </select>
          <br>
         Player ID:
         <select name ="player_ID">
             {{#each specificEndorsements}}
-            <option value = {{player_id}}>{{player_id}}-{{company_name}}</option>
+            <option value = {{player_id}}>{{player_name}}</option>
             {{/each}}
         </select>
         <br>
