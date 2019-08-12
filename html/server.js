@@ -470,16 +470,6 @@ function getSpecificEndorsements(res, mysql, context, complete) {
     });
 }
 
-function getFilteredEndorsements(res, mysql, context, complete) {
-    mysql.pool.query('SELECT e.contractual_id, e.player_id,e.company_name,concat(p.first_name," ",p.last_name) as player_name,e.salary FROM nba_endorsements as e INNER JOIN nba_players as p on p.id = e.player_id where e.player id = ?', function (error, results, fields) {
-        if (error) {
-            res.write(JSON.stringify(error));
-            res.end();
-        }
-        context.filteredEndorsements = results;
-        complete();
-    });
-}
 
 app.get('/player_endorsements', function (req, res, next) {
     var callbackCount = 0;
@@ -487,10 +477,10 @@ app.get('/player_endorsements', function (req, res, next) {
     context.title = 'Players/Endorsements';
     getPlayerEndorsements(res, mysql, context, complete);
     getSpecificEndorsements(res, mysql, context, complete);
-     getFilteredEndorsements(res, mysql, context, complete);
+
     function complete() {
         callbackCount++;
-        if (callbackCount >= 3) {
+        if (callbackCount >= 2) {
             res.render('players_endorsements', context);
         }
     }
