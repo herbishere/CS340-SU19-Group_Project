@@ -1,8 +1,17 @@
 <h1>Welcome to the Players / Endorsements Page!</h1>
 <h2>View Endorsements by Player</h2>
 <!-- DISPLAY ALL THE PLAYERS/Endorsements IN A TABLE -->
-
-
+<div class='form filter player endorsement'>
+    <form id = "filterPlayerEndorsements" action="/player_endorsements" method="get">
+Filter By Player Name:
+        <select name ="player_ID">
+            {{#each filteredEndorsements}}
+            <option value = {{player_id}}>{{player_name}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
 
 
 <div class="table display player_endorsements">
