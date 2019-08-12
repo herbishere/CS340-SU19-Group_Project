@@ -45,17 +45,6 @@ function getPlayerInfo(res, mysql, context, complete) {
     });
 }
 
-// function getTeamsForPlayers(res, mysql, context, complete) {
-//     mysql.pool.query('SELECT id, name FROM nba_teams', function (error, results, fields) {
-//         if (error) {
-//             res.write(JSON.stringify(error));
-//             res.end();
-//         }
-//         context.teamsForPlayers = results;
-//         complete();
-//     });
-// }
-
 app.get('/players', function (req, res, next) {
 
     var callbackCount = 0;
