@@ -33,12 +33,13 @@
 <div class='form insert player endorsement'>
     <form id = "addPlayerEndorsement" action="/player_endorsements" method="post">
         Endorsement ID:
-        <input type='text' name="endorsement_id" required>
-        <br>
-        Player ID:
-        <input type='text' name="player_id" required>
-        <br>
         
+        <select name ="endorsement_ID">
+            {{#each specificEndorsements}}
+            <option value = {{contractual_id}}>{{player_id}}"-"{{company_name}}</option>
+            {{/each}}
+        </select>
+        <br>
         <input type="submit" value="Submit">
     </form>
 </div>

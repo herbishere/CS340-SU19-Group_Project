@@ -447,16 +447,26 @@ function getPlayerEndorsements(res, mysql, context, complete) {
     });
 }
 
+function getSpecificEndorsements(res, mysql, context, complete) {
+    mysql.pool.query('SELECT contractual_id, player_id,company_name FROM nba_endorsements', function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.specificEndorsements = results;
+        complete();
+    });
+}
 
 app.get('/player_endorsements', function (req, res, next) {
     var callbackCount = 0;
     var context = {};
     context.title = 'Players/Endorsements';
     getPlayerEndorsements(res, mysql, context, complete);
-
+    getSpecificEndorsements(res, mysql, context, complete);
     function complete() {
         callbackCount++;
-        if (callbackCount >= 1) {
+        if (callbackCount >= 2) {
             res.render('players_endorsements', context);
         }
     }
