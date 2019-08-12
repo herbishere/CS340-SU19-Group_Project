@@ -462,6 +462,21 @@ app.get('/player_endorsements', function (req, res, next) {
     }
 });
 
+app.post('/player_endorsements', function (req, res) {
+    var sql = "INSERT INTO `player_endorsements` ( `player_id`,`endorsement_id`) VALUES (?, ?)";
+    var inserts = [req.body.player_id, req.body.endorsement_id];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/player_endorsements');
+        }
+    });
+});
+
+
 ////////////////////
 // ERROR HANDLING //
 ////////////////////

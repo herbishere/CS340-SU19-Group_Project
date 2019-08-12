@@ -1,6 +1,10 @@
 <h1>Welcome to the Players / Endorsements Page!</h1>
 <h2>View Endorsements by Player</h2>
 <!-- DISPLAY ALL THE PLAYERS/Endorsements IN A TABLE -->
+
+
+
+
 <div class="table display player_endorsements">
     <h2>Endorsements</h2>
     <table>
@@ -23,4 +27,18 @@
             {{/each}}
         </tbody>
     </table>
+</div>
+
+<h3>ADD ENDORSEMENT</h3>
+<div class='form insert player endorsement'>
+    <form id = "addPlayerEndorsement" action="/player_endorsements" method="post">
+        Endorsement ID:
+        <input type='text' name="endorsement_id" required>
+        <br>
+        Player ID:
+        <input type='text' name="player_id" required>
+        <br>
+        
+        <input type="submit" value="Submit">
+    </form>
 </div>
