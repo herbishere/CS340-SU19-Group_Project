@@ -64,8 +64,12 @@ app.get('/players', function (req, res, next) {
 //INSERT FUNCTIONALITY
 app.post('/players', function (req, res) {
     var sql = "INSERT INTO `nba_players` (`id`,`first_name`, `last_name`, `team_ID`, `birthdate`, `points`, `school`,`position`,`player_year_start`,`last_year_active`) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?)";
-
-    var inserts = [req.body.id, req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school, req.body.position, req.body.player_year_start, req.body.last_year_active];
+    // check if team has been set
+    var teamChoice = null;
+    if (req.body.team_ID != '') {
+        teamChoice = req.body.team_ID
+    }
+    var inserts = [req.body.id, req.body.first_name, req.body.last_name, teamChoice, req.body.birthdate, req.body.points, req.body.school, req.body.position, req.body.player_year_start, req.body.last_year_active];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
