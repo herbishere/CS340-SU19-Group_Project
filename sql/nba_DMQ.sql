@@ -73,9 +73,7 @@ INSERT INTO `nba_championships` (`year`, `west_teamID`, `west_record`, `east_tea
 
 -------------------------------------------------------------------------------------------------------------------------------------------
 ---get all of the the player data
-
-SELECT id, first_name,last_name, team_ID, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players;
-
+SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id
 
 select p.first_name,p.last_name,t.name 
 from players p inner join nab_teams t on t.id = p.team_ID 

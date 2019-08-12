@@ -1,47 +1,47 @@
 <h1>Welcome to the Players Page!</h1>
 
-
+<h3>Players in the Database</h3>
 <div id="players_display" class="table players display">
     <table>
         <!-- TODO: POPULATE FROM QUERY RESULTS-->
-    <thead> 
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Team ID</th>
-            <th>Birthdate</th>
-            <th>Points</th>
-            <th>School</th>
-            <th>Position</th>
-            <th>Player_Year_Start</th>
-            <th>Last_Year_Active</th>
-        </tr>
-    </thead>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Team</th>
+                <th>Birthdate</th>
+                <th>Points</th>
+                <th>School</th>
+                <th>Position</th>
+                <th>Starting Year</th>
+                <th>Last Active Year</th>
+            </tr>
+        </thead>
         <tbody>
             {{#each player}}
             <tr>
-            <td>{{id}}</td>
-            <td>{{first_name}}</td>
-            <td>{{last_name}}</td>
-            <td>{{team_ID}}</td>
-            <td>{{birthdate}}</td>
-            <td>{{points}}</td> 
-            <td>{{school}}</td>
-            <td>{{position}}</td> 
-            <td>{{player_year_start}}</td>
-            <td>{{last_year_active}}</td>
+                <td>{{id}}</td>
+                <td>{{first_name}}</td>
+                <td>{{last_name}}</td>
+                <td>{{team_name}}</td>
+                <td>{{birthdate}}</td>
+                <td>{{points}}</td>
+                <td>{{school}}</td>
+                <td>{{position}}</td>
+                <td>{{player_year_start}}</td>
+                <td>{{last_year_active}}</td>
             </tr>
             {{/each}}
-                
+
         </tbody>
     </table>
 </div>
 <h3>ADD PLAYER</h3>
 <div class='form insert player'>
-    <form id = "addPlayer" action="/players" method = "post">
+    <form id="addPlayer" action="/players" method="post">
         ID:
-        <input type='text' name="id" required>
+        <input type='text' name="id" required><br>
         First Name:
         <input type='text' name="first_name" required>
         <br>
@@ -49,14 +49,15 @@
         <input type='text' name="last_name" required>
         <br>
         Team Name:
-        <select name ="team_ID">
-            {{#each teamsForPlayers}}
-            <option value = {{id}}>{{name}}</option>
+        <select name="team_ID">
+            <option value=''>No Team</option>
+            {{#each team}}
+            <option value={{team_id}}>{{team_name}}</option>
             {{/each}}
         </select>
         <br>
         Birthdate:
-        <input type='text' name="birthdate" required>
+        <input type="date" name="birthdate" required>
         <br>
         Points:
         <input type='text' name="points" required>
@@ -65,19 +66,19 @@
         <input type='text' name="school" required>
         <br>
         Position:
-        <select name = "position">
-            <option value = "Point Guard">Point Guard</option>
-            <option value = "Shooting Guard">Shooting Guard</option>
-            <option value = "Small Forward">Small Forward</option>
-            <option value = "Power Forward">Power Forward</option>
-            <option value = "Center">Center</option>
+        <select name="position">
+            <option value="POINT GUARD">Point Guard</option>
+            <option value="SHOOTING GUARD">Shooting Guard</option>
+            <option value="SMALL FORWARD">Small Forward</option>
+            <option value="POWER FORWARD">Power Forward</option>
+            <option value="CENTER">Center</option>
         </select>
         <br>
         Player Year Start:
-        <input type='number' min = "1950" max = "2019" name="player_year_start" required>
+        <input type='number' min="1950" max="2019" name="player_year_start" required>
         <br>
         Last Year Active:
-        <input type='number' min = "1950" max = "2019" name="last_year_active">
+        <input type='number' min="1950" max="2019" name="last_year_active">
         <br>
         <input type="submit" value="Submit">
     </form>
