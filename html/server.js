@@ -449,7 +449,7 @@ app.delete('/player_championships/year/:champID/playerID/:playID', function (req
 ////////////////////////////////////
 
 function getPlayerEndorsements(res, mysql, context, complete) {
-    mysql.pool.query("SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID", function (error, results, fields) {
+    mysql.pool.query("SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary,e.years_signed FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID", function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
