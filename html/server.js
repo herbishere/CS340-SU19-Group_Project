@@ -34,12 +34,8 @@ app.get('/', function (req, res, next) {
 ///////////////////////////
 // PLAYERS PAGE REQUESTS //
 ///////////////////////////
-/*TODO:
-
-SELECT FUNCTIONALITY
-*/
 function getPlayerInfo(res, mysql, context, complete) {
-    mysql.pool.query('SELECT id, first_name,last_name, team_ID, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players', function (error, results, fields) {
+    mysql.pool.query("SELECT id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np INNER JOIN nba_teams as nt ON nt.id = np.team_id", function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
@@ -49,16 +45,16 @@ function getPlayerInfo(res, mysql, context, complete) {
     });
 }
 
-function getTeamsForPlayers(res, mysql, context, complete) {
-    mysql.pool.query('SELECT id, name FROM nba_teams', function (error, results, fields) {
-        if (error) {
-            res.write(JSON.stringify(error));
-            res.end();
-        }
-        context.teamsForPlayers = results;
-        complete();
-    });
-}
+// function getTeamsForPlayers(res, mysql, context, complete) {
+//     mysql.pool.query('SELECT id, name FROM nba_teams', function (error, results, fields) {
+//         if (error) {
+//             res.write(JSON.stringify(error));
+//             res.end();
+//         }
+//         context.teamsForPlayers = results;
+//         complete();
+//     });
+// }
 
 app.get('/players', function (req, res, next) {
 
@@ -66,7 +62,7 @@ app.get('/players', function (req, res, next) {
     var context = {};
     context.title = 'Players'
     getPlayerInfo(res, mysql, context, complete);
-    getTeamsForPlayers(res, mysql, context, complete);
+    getTeams(res, mysql, context, complete);
 
     function complete() {
         callbackCount++;
@@ -80,7 +76,7 @@ app.get('/players', function (req, res, next) {
 app.post('/players', function (req, res) {
     var sql = "INSERT INTO `nba_players` (`id`,`first_name`, `last_name`, `team_ID`, `birthdate`, `points`, `school`,`position`,`player_year_start`,`last_year_active`) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?)";
 
-    var inserts = [req.body.id,req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school, req.body.position, req.body.player_year_start, req.body.last_year_active];
+    var inserts = [req.body.id, req.body.first_name, req.body.last_name, req.body.team_ID, req.body.birthdate, req.body.points, req.body.school, req.body.position, req.body.player_year_start, req.body.last_year_active];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
@@ -126,7 +122,7 @@ app.get('/endorsements', function (req, res) {
     context.title = 'Endorsements'
     getEndorsementInfo(res, mysql, context, complete);
     getSpecificPlayers(res, mysql, context, complete);
-    
+
     function complete() {
         callbackCount++;
         if (callbackCount >= 2) {
@@ -488,7 +484,7 @@ app.get('/player_endorsements', function (req, res, next) {
 
 app.post('/player_endorsements', function (req, res) {
     var sql = "INSERT INTO `player_endorsements` ( `endorsement_ID`,`player_ID`) VALUES (?,?)";
-    var inserts = [ req.body.endorsement_ID,req.body.player_ID];
+    var inserts = [req.body.endorsement_ID, req.body.player_ID];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
