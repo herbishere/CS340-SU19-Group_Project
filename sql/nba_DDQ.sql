@@ -117,7 +117,7 @@ CREATE TABLE `nba_players` (
   `id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `team_ID` int(11) NOT NULL,
+  `team_ID` int(11) DEFAULT NULL,
   `birthdate` date NOT NULL,
   `points` int(11) NOT NULL,
   `school` varchar(255) NOT NULL,
