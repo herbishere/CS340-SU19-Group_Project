@@ -35,7 +35,7 @@ app.get('/', function (req, res, next) {
 // PLAYERS PAGE REQUESTS //
 ///////////////////////////
 function getPlayerInfo(res, mysql, context, complete) {
-    mysql.pool.query("SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np INNER JOIN nba_teams as nt ON nt.id = np.team_id", function (error, results, fields) {
+    mysql.pool.query("SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id", function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
