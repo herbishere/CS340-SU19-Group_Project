@@ -32,7 +32,7 @@
 <h3>ADD ENDORSEMENT</h3>
 <div class='form insert player endorsement'>
     <form id = "addPlayerEndorsement" action="/player_endorsements" method="post">
-        Endorsement ID:
+        Endorsement Deal:
         
         <select name ="endorsement_ID">
             {{#each specificEndorsements}}
@@ -40,7 +40,7 @@
             {{/each}}
         </select>
          <br>
-        Player ID:
+        Player Name:
         <select name ="player_ID">
             {{#each specificEndorsements}}
             <option value = {{player_id}}>{{player_name}}</option>
