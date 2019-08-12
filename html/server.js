@@ -437,7 +437,7 @@ app.delete('/player_championships/year/:champID/playerID/:playID', function (req
 ////////////////////////////////////
 
 function getPlayerEndorsements(res, mysql, context, complete) {
-    mysql.pool.query("SELECT pe.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID ", function (error, results, fields) {
+    mysql.pool.query("SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID", function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
@@ -473,8 +473,8 @@ app.get('/player_endorsements', function (req, res, next) {
 });
 
 app.post('/player_endorsements', function (req, res) {
-    var sql = "INSERT INTO `player_endorsements` ( `player_id`,`endorsement_id`) VALUES (?, ?)";
-    var inserts = [req.body.player_id, req.body.endorsement_id];
+    var sql = "INSERT INTO `player_endorsements` ( `endorsement_id`) VALUES ( ?)";
+    var inserts = [ req.body.endorsement_id];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
