@@ -48,8 +48,12 @@
         Last Name:
         <input type='text' name="last_name" required>
         <br>
-        Team ID:
-        <input type='text' name="team_ID" required>
+        Team Name:
+        <select name ="team_name">
+            {{#each teamsForPlayers}}
+            <option value = "{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
         <br>
         Birthdate:
         <input type='text' name="birthdate" required>
