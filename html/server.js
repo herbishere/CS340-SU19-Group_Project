@@ -473,8 +473,8 @@ app.get('/player_endorsements', function (req, res, next) {
 });
 
 app.post('/player_endorsements', function (req, res) {
-    var sql = "INSERT INTO `player_endorsements` ( `endorsement_ID`) VALUES (?)";
-    var inserts = [ req.body.endorsement_ID];
+    var sql = "INSERT INTO `player_endorsements` ( `endorsement_ID`,`player_ID`) VALUES (?,?)";
+    var inserts = [ req.body.endorsement_ID,req.body.player_ID];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
