@@ -109,7 +109,7 @@ function getEndorsementInfo(res, mysql, context, complete) {
 }
 
 function getSpecificPlayers(res, mysql, context, complete) {
-    mysql.pool.query('id,concat(p.first_name," ",p.last_name) as player_name FROM nba_players as p', function (error, results, fields) {
+    mysql.pool.query('SELECT p.id,concat(p.first_name," ",p.last_name) as player_name FROM nba_players as p', function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
