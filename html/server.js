@@ -460,7 +460,7 @@ function getSpecificEndorsements(res, mysql, context, complete) {
 }
 
 function getSpecificPlayer(res, mysql, context, complete) {
-    mysql.pool.query('SELECT p.id,concat(p.first_name," ",p.last_name) as player_name FROM nba_players as p', function (error, results, fields) {
+    mysql.pool.query('SELECT DISTINCT pe.player_ID,concat(p.first_name," ",p.last_name) as player_name FROM player_endorsements as pe inner join nba_players as p on pe.player_ID=p.id', function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
