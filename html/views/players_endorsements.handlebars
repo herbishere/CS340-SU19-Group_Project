@@ -2,11 +2,11 @@
 <h2>View Endorsements by Player</h2>
 <!-- DISPLAY ALL THE PLAYERS/Endorsements IN A TABLE -->
 
-<form id="filterPlayer" action="/player_endorsements_filtered" method="post">
+<form id="filterPlayer" action="/player_endorsements_filtered" method="get">
 Player Name:
         <select name="player_ID">
             {{#each specificPlayer}}
-            <option value={{player_id}}>{{player_name}}</option>
+            <option value={{player_ID}}>{{player_name}}</option>
             {{/each}}
         </select>
     <input type="submit" value="Submit">
