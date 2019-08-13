@@ -1,0 +1,28 @@
+<div id="teams_display" class="table teams display">
+    <h2>Teams in {{searchDivision}}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Name</th>
+                <th>Conference</th>
+                <th>Division</th>
+                <th>Arena</th>
+                <th>Head Coach</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each team}}
+            <tr>
+                <td>{{team_city}}</td>
+                <td>{{name}}</td>
+                <td>{{conference}}</td>
+                <td>{{division}}</td>
+                <td>{{arena}}</td>
+                <td>{{head_coach}}</td>
+                <td><a href="/teams/{{id}}">UPDATE</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

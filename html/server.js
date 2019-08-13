@@ -263,7 +263,7 @@ app.post('/teams/:id', function (req, res) {
 
 // TEAM FILTER
 
-app.get('/searchTeamsByDivision_form', function (req, res) {
+app.get('/searchTeamsByDivision', function (req, res) {
     callbackCount = 0;
     var context = {};
     context.title = "Search By Division";
@@ -275,6 +275,40 @@ app.get('/searchTeamsByDivision_form', function (req, res) {
             res.render('teams_filter_FORM', context);
         }
     }
+});
+
+app.post('/searchTeamsByDivision_form', function (req, res) {
+    var link = '/searchTeamsByDivision/' + req.body.division;
+    res.redirect(link);
+});
+
+function getTeamsByDivision(req, res, mysql, context, complete) {
+    var query = "SELECT team_city,name,conference,division,arena,head_coach FROM nba_teams WHERE division = " + mysql.pool.escape(req.params.division + '%');
+    console.log(query);
+    mysql.pool.query(query, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.teams = results;
+        complete();
+    });
+}
+
+app.get('/searchTeamsByDivision/:division', function (req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.title = "Search By " + req.params.division;
+    context.searchDivision = req.params.division;
+    getTeamsByDivision(req, res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('teams_filter_RESULTS', context);
+        }
+    }
+
 });
 
 /////////////////////////////////
