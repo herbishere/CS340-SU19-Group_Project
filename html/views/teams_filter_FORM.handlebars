@@ -1,0 +1,12 @@
+<h1>You are currenly searching by Division!</h1>
+<form action="/searchTeamsByDivision_form" method="POST">
+    <fieldset>
+        <legend>Select Division</legend>
+        <fieldset>
+            {{#each division}}
+            <input type="radio" name="division" value={{division_name}} required> {{division_name}}<br>
+            {{/each}}
+        </fieldset>
+        <input type="submit" value="Submit">
+    </fieldset>
+</form>
