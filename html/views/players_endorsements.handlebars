@@ -1,9 +1,11 @@
 <h1>Welcome to the Players / Endorsements Page!</h1>
 <h2>View Endorsements by Player</h2>
 <!-- DISPLAY ALL THE PLAYERS/Endorsements IN A TABLE -->
- Player Name:
+
+<form id="filterPlayer" action="/player_endorsements" method="post">
+Player Name:
         <select name="player_ID">
-            {{#each player}}
+            {{#each specificPlayer}}
             <option value={{player_id}}>{{player_name}}</option>
             {{/each}}
         </select>
