@@ -511,7 +511,7 @@ function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
             res.write(JSON.stringify(error));
             res.end();
         }
-        context.playerEndorsements = results;
+        context.playerEndorsementsFiltered = results;
         complete();
     });
 }
