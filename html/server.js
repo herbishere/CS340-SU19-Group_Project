@@ -270,7 +270,7 @@ app.get('/searchTeamsByDivision_form', function (req, res) {
     getDivisionNames(res, mysql, context, complete);
 
     function complete() {
-        callBackCount++;
+        callbackCount++;
         if (callbackCount >= 1) {
             res.render('teams_filter_FORM', context);
         }
