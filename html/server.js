@@ -283,7 +283,7 @@ app.post('/searchTeamsByDivision_form', function (req, res) {
 });
 
 function getTeamsByDivision(req, res, mysql, context, complete) {
-    var query = "SELECT team_city,name,conference,division,arena,head_coach FROM nba_teams WHERE division = " + mysql.pool.escape(req.params.division + '%');
+    var query = "SELECT team_city,name,conference,division,arena,head_coach FROM nba_teams WHERE division = " + mysql.pool.escape(req.params.division);
     console.log(query);
     mysql.pool.query(query, function (error, results, fields) {
         if (error) {
