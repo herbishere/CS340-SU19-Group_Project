@@ -448,6 +448,18 @@ function getPlayerEndorsements(res, mysql, context, complete) {
     });
 }
 
+function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
+    mysql.pool.query("SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary,e.years_signed,e.company_name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID WHERE Player_ID = ?", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.playerEndorsements = results;
+        complete();
+    });
+}
+
+
 function getSpecificEndorsements(res, mysql, context, complete) {
     mysql.pool.query('SELECT e.contractual_id, e.player_id,e.company_name,concat(p.first_name," ",p.last_name) as player_name,e.salary FROM nba_endorsements as e INNER JOIN nba_players as p on p.id = e.player_id', function (error, results, fields) {
         if (error) {
@@ -477,10 +489,11 @@ app.get('/player_endorsements', function (req, res, next) {
     getPlayerEndorsements(res, mysql, context, complete);
     getSpecificEndorsements(res, mysql, context, complete);
     getSpecificPlayer(res, mysql, context, complete);
+    getPlayerEndorsementsFiltered(res, mysql, context, complete);
     
     function complete() {
         callbackCount++;
-        if (callbackCount >=3) {
+        if (callbackCount >=4) {
             res.render('players_endorsements', context);
         }
     }
