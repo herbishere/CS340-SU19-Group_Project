@@ -516,16 +516,16 @@ function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
     });
 }
 
-app.get('/player_endorsements_filtered/:player_ID', function (req, res, next) {
+app.get('/player_endorsements_filtered', function (req, res, next) {
     var callbackCount = 0;
     var context = {};
-    context.title = 'Players/Endorsements';
+    context.title = 'Players/Endorsements_Filtered';
     getPlayerEndorsementsFiltered(res, mysql, context, complete);
      
     function complete() {
         callbackCount++;
         if (callbackCount >=1) {
-            res.render('players_endorsements', context);
+            res.render('players_endorsements_filtered', context);
         }
     }
 });
