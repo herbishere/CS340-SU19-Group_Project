@@ -1,8 +1,7 @@
-<h1>Welcome to the Players / Endorsements Page!</h1>
 <h2>View Endorsements by Player</h2>
 <!-- DISPLAY ALL THE PLAYERS/Endorsements IN A TABLE -->
 
-<form id="filterPlayer" action="/player_endorsements_filtered" method="post">
+<form id="filterPlayer" action="/player_endorsements" method="post">
 Player Name:
         <select name="player_ID">
             {{#each specificPlayer}}
@@ -43,26 +42,4 @@ Player Name:
             {{/each}}
         </tbody>
     </table>
-</div>
-
-<h3>ADD ENDORSEMENT</h3>
-<div class='form insert player endorsement'>
-    <form id = "addPlayerEndorsement" action="/player_endorsements" method="post">
-        Endorsement Deal:
-        
-        <select name ="endorsement_ID">
-            {{#each specificEndorsements}}
-            <option value = {{contractual_id}}>{{player_name}}-{{company_name}}-{{salary}}</option>
-            {{/each}}
-        </select>
-         <br>
-        Player Name:
-        <select name ="player_ID">
-            {{#each specificEndorsements}}
-            <option value = {{player_id}}>{{player_name}}</option>
-            {{/each}}
-        </select>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
 </div>
