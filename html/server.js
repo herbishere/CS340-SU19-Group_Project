@@ -516,7 +516,7 @@ function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
     });
 }
 
-app.get('/players_endorsements/:player_ID', function (req, res) {
+app.get('/players_endorsements_filtered/:player_ID', function (req, res) {
     callbackCount = 0;
     var context = {};
     context.title = "Players_Endorsements_Filtered";
