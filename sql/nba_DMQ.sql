@@ -24,6 +24,9 @@ SELECT DISTINCT division as division_name FROM nba_teams
 -- get specific teams information
 SELECT id, team_city, name, conference, division, arena, head_coach FROM nba_teams WHERE id = ?
 
+-- get team information based on division
+SELECT team_city, name, conference, division, arena, head_coach FROM nba_teams WHERE division = ?
+
 -------------------
 --INSERT FUNCTION--
 -------------------

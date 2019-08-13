@@ -146,9 +146,6 @@ app.post('/endorsements', function (req, res) {
 /////////////////////////
 // TEAMS PAGE REQUESTS //
 /////////////////////////
-/*TODO:
-UPDATE FUNCTIONALITY
-*/
 
 // GET ALL THE TEAM INFORMATION
 function getAllTeamsInfo(res, mysql, context, complete) {
@@ -262,6 +259,57 @@ app.post('/teams/:id', function (req, res) {
             res.redirect('/teams');
         }
     });
+});
+
+/////////////////
+// TEAM FILTER //
+/////////////////
+
+app.get('/searchTeamsByDivision', function (req, res) {
+    callbackCount = 0;
+    var context = {};
+    context.title = "Search By Division";
+    getDivisionNames(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('teams_filter_FORM', context);
+        }
+    }
+});
+
+app.post('/searchTeamsByDivision_form', function (req, res) {
+    var link = '/searchTeamsByDivision/' + req.body.division;
+    res.redirect(link);
+});
+
+function getTeamsByDivision(req, res, mysql, context, complete) {
+    var query = "SELECT team_city,name,conference,division,arena,head_coach FROM nba_teams WHERE division = " + mysql.pool.escape(req.params.division);
+    mysql.pool.query(query, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.team = results;
+        complete();
+    });
+}
+
+app.get('/searchTeamsByDivision/:division', function (req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.title = "The " + req.params.division + " Division";
+    context.searchDivision = req.params.division;
+    getTeamsByDivision(req, res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('teams_filter_RESULTS', context);
+        }
+    }
+
 });
 
 /////////////////////////////////
@@ -478,12 +526,12 @@ app.get('/player_endorsements', function (req, res, next) {
     getPlayerEndorsements(res, mysql, context, complete);
     getSpecificEndorsements(res, mysql, context, complete);
     getSpecificPlayer(res, mysql, context, complete);
-    
-    
-    
+
+
+
     function complete() {
         callbackCount++;
-        if (callbackCount >=3) {
+        if (callbackCount >= 3) {
             res.render('players_endorsements', context);
         }
     }
@@ -506,7 +554,7 @@ app.post('/player_endorsements', function (req, res) {
 
 
 function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
-    mysql.pool.query("SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary,e.years_signed,e.company_name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID WHERE Player_ID =?",[req.query],function (error, results, fields) {
+    mysql.pool.query("SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary,e.years_signed,e.company_name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID WHERE Player_ID =?", [req.query], function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
@@ -521,7 +569,7 @@ app.get('/players_endorsements_filtered/:player_ID', function (req, res) {
     var context = {};
     context.title = "Players_Endorsements_Filtered";
     getPlayerEndorsementsFiltered(res, mysql, context, complete);
-    
+
 
     function complete() {
         callbackCount++;
