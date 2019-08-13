@@ -459,6 +459,16 @@ function getSpecificEndorsements(res, mysql, context, complete) {
     });
 }
 
+function getSpecificPlayer(res, mysql, context, complete) {
+    mysql.pool.query('SELECT p.id,concat(p.first_name," ",p.last_name) as player_name FROM nba_players as p', function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.specificPlayer = results;
+        complete();
+    });
+}
 
 app.get('/player_endorsements', function (req, res, next) {
     var callbackCount = 0;
@@ -466,10 +476,11 @@ app.get('/player_endorsements', function (req, res, next) {
     context.title = 'Players/Endorsements';
     getPlayerEndorsements(res, mysql, context, complete);
     getSpecificEndorsements(res, mysql, context, complete);
-
+    getSpecificPlayer(res, mysql, context, complete);
+    
     function complete() {
         callbackCount++;
-        if (callbackCount >= 2) {
+        if (callbackCount >=3) {
             res.render('players_endorsements', context);
         }
     }
