@@ -261,7 +261,9 @@ app.post('/teams/:id', function (req, res) {
     });
 });
 
-// TEAM FILTER
+/////////////////
+// TEAM FILTER //
+/////////////////
 
 app.get('/searchTeamsByDivision', function (req, res) {
     callbackCount = 0;
@@ -284,7 +286,6 @@ app.post('/searchTeamsByDivision_form', function (req, res) {
 
 function getTeamsByDivision(req, res, mysql, context, complete) {
     var query = "SELECT team_city,name,conference,division,arena,head_coach FROM nba_teams WHERE division = " + mysql.pool.escape(req.params.division);
-    console.log(query);
     mysql.pool.query(query, function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -298,7 +299,7 @@ function getTeamsByDivision(req, res, mysql, context, complete) {
 app.get('/searchTeamsByDivision/:division', function (req, res) {
     var callbackCount = 0;
     var context = {};
-    context.title = "Search By " + req.params.division;
+    context.title = "The " + req.params.division + " Division";
     context.searchDivision = req.params.division;
     getTeamsByDivision(req, res, mysql, context, complete);
 
