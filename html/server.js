@@ -290,7 +290,7 @@ function getTeamsByDivision(req, res, mysql, context, complete) {
             res.write(JSON.stringify(error));
             res.end();
         }
-        context.teams = results;
+        context.team = results;
         complete();
     });
 }
