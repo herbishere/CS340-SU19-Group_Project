@@ -516,15 +516,16 @@ function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
     });
 }
 
-app.get('/player_endorsements_filtered', function (req, res, next) {
-    var callbackCount = 0;
+app.get('/players_endorsements/:player_ID', function (req, res) {
+    callbackCount = 0;
     var context = {};
-    context.title = 'Player/Endorsements_Filtered';
+    context.title = "Players_Endorsements_Filtered";
     getPlayerEndorsementsFiltered(res, mysql, context, complete);
-     
+    
+
     function complete() {
         callbackCount++;
-        if (callbackCount >=1) {
+        if (callbackCount >= 1) {
             res.render('player_endorsements_filtered', context);
         }
     }
