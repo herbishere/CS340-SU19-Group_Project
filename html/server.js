@@ -508,16 +508,7 @@ function getSpecificEndorsements(res, mysql, context, complete) {
     });
 }
 
-function getSpecificPlayer(res, mysql, context, complete) {
-    mysql.pool.query('SELECT DISTINCT pe.player_ID,concat(p.first_name," ",p.last_name) as player_name FROM player_endorsements as pe inner join nba_players as p on pe.player_ID=p.id', function (error, results, fields) {
-        if (error) {
-            res.write(JSON.stringify(error));
-            res.end();
-        }
-        context.specificPlayer = results;
-        complete();
-    });
-}
+
 
 app.get('/player_endorsements', function (req, res, next) {
     var callbackCount = 0;
@@ -568,18 +559,28 @@ function getPlayerEndorsementsFiltered(req,res, mysql, context, complete) {
     });
 }
     
+function getSpecificPlayer(res, mysql, context, complete) {
+    mysql.pool.query('SELECT DISTINCT pe.player_ID,concat(p.first_name," ",p.last_name) as player_name FROM player_endorsements as pe inner join nba_players as p on pe.player_ID=p.id', function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.specificPlayer = results;
+        complete();
+    });
+}
 
-app.get('/players_endorsements_filtered/:player_ID', function (req, res) {
+app.get('/players_endorsements_filtered/'+req.body.player_ID, function (req, res) {
     callbackCount = 0;
     var context = {};
     var mysql = req.app.get('mysql');
     context.title = "Players_Endorsements_Filtered";
     getPlayerEndorsementsFiltered(req,res, mysql, context, complete);
-
+    getSpecificPlayer(res, mysql, context, complete);
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 1) {
+        if (callbackCount >= 2) {
             res.render('player_endorsements_filtered', context);
         }
     }

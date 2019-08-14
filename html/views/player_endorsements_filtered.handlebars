@@ -1,5 +1,13 @@
 <h2>View Endorsements for {{player_name}}</h2>
-
+<form id="filterPlayer" action="/player_endorsements_filtered" method="post">
+Player Name:
+        <select name="player_ID">
+            {{#each specificPlayer}}
+            <option value={{player_ID}}>{{player_name}}</option>
+            {{/each}}
+        </select>
+    <input type="submit" value="Filter" >
+</form>
 
 <div class="table display player_endorsements_filtered">
     <h2>Endorsements</h2>
