@@ -2,14 +2,14 @@
 <h2>View Endorsements by Player</h2>
 <!-- DISPLAY ALL THE PLAYERS/Endorsements IN A TABLE -->
 
-<form id="filterPlayer" action="/player_endorsements_filtered" method="get">
+<form id="filterPlayer" action="/player_endorsements_filtered" method="post">
 Player Name:
         <select name="player_ID">
             {{#each specificPlayer}}
             <option value={{player_ID}}>{{player_name}}</option>
             {{/each}}
         </select>
-    <input type="button" value="Filter" onclick="getPlayerEndorsementsFiltered(req,res, mysql, context, complete)">
+    <input type="button" value="Filter" onclick="/player_endorsements_filtered">
 </form>
         <br>
 
