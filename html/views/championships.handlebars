@@ -10,21 +10,21 @@
             </fieldset>
             <fieldset>
                 <legend>Select Western Conference Champion</legend>
-                Team:<select name="west_teamID">
+                Team: <select name="west_teamID">
                     {{#each west_team}}
                     <option value={{west_id}}>{{west_team_name}}</option>
                     {{/each}}
                 </select><br>
-                Record: <input type="number" name="west_record" required><br>
+                Record (# of Games Won): <input type="number" name="west_record" required><br>
             </fieldset>
             <fieldset>
                 <legend>Select Eastern Conference Champion</legend>
-                Team:<select name="east_teamID">
+                Team: <select name="east_teamID">
                     {{#each east_team}}
                     <option value={{east_id}}>{{east_team_name}}</option>
                     {{/each}}
                 </select><br>
-                Record: <input type="number" name="east_record" required><br>
+                Record (# of Games Won): <input type="number" name="east_record" required><br>
             </fieldset>
             <fieldset>
                 Select Champion:
