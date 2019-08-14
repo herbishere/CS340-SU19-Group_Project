@@ -544,12 +544,8 @@ app.post('/player_endorsements', function (req, res) {
 /////////////////////////////////////////////////////////////
 
 
-function getPlayerEndorsementsFiltered(req,res, mysql, context, complete) {
-    var query = "SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary,e.years_signed,e.company_name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID "; 
-    
-    console.log(req.params)
-    var inserts = [req.params.player_ID]
-    mysql.pool.query(query,inserts,function (error, results, fields) {
+function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
+    mysql.pool.query("SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary,e.years_signed,e.company_name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID", function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
