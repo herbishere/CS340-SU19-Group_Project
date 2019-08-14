@@ -570,7 +570,7 @@ function getSpecificPlayer(res, mysql, context, complete) {
     });
 }
 
-app.get('/players_endorsements_filtered/'+req.body.player_ID, function (req, res) {
+app.get('/players_endorsements_filtered/', function (req, res) {
     callbackCount = 0;
     var context = {};
     var mysql = req.app.get('mysql');
