@@ -570,12 +570,11 @@ function getSpecificPlayer(res, mysql, context, complete) {
     });
 }
 
-app.get('/player_endorsements_filtered/', function (req, res) {
-    callbackCount = 0;
+app.get('/player_endorsements_filtered', function (req, res, next) {
+    var callbackCount = 0;
     var context = {};
-    var mysql = req.app.get('mysql');
-    context.title = "Players_Endorsements_Filtered";
-    getPlayerEndorsementsFiltered(req,res, mysql, context, complete);
+    context.title = 'player_endorsements_filtered';
+    getPlayerEndorsementsFiltered(res, mysql, context, complete);
     getSpecificPlayer(res, mysql, context, complete);
 
     function complete() {
