@@ -1,6 +1,7 @@
+<div>
 <h3>Players Filtered by Team</h3>
 <form id="filterPlayerByTeam" action="/players_Filtered" method="post">
-Player Name:
+Team Name:
         <select name="team_ID">
             {{#each playerTeamsFiltered}}
             <option value={{team_ID}}>{{team_name}}</option>
@@ -8,6 +9,7 @@ Player Name:
         </select>
     <input type="submit" value="Filter by Team" >
 </form>
+</div>
 
 <div id="players_filtered_display" class="table players filtered display">
     <table>

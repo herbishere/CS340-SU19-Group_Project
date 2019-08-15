@@ -690,7 +690,7 @@ app.get('/players_Results/:team_ID', function (req, res) {
     var callbackCount = 0;
     var context = {};
     context.title = "Player by Team";
-    context.playerTEamResults = req.params.team_ID;
+    context.playerTeamResults = req.params.team_ID;
     getPlayerTeamResults(req, res, mysql, context, complete);
 
     function complete() {
