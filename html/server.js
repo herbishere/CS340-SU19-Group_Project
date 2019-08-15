@@ -1,3 +1,21 @@
+/********************************************************************
+ * Authors:                 Gilbert Hernandez <hernagil@oregonstate.edu>
+ *                          Herbert Diaz <diazh@oregonstate.edu>
+ * Date Created:            07/28/2019
+ * Last Modification Date:  08/14/2019
+ * Filename:                server.js
+ * 
+ * Overview:
+ *  OSU SUMMER 2019 - CS340 Final Project.
+ *  Based on Code from CS290 - Homework 9 and nodejsSample from CS340
+ * 
+ * Input:
+ *  Gets, Posts, Puts, and Deletes from calling function.
+ * 
+ * Output:
+ *  Interacts with the mysql database according to recieved info.
+ *******************************************************************/
+
 ///////////
 // SETUP //
 ///////////
@@ -123,11 +141,6 @@ app.get('/endorsements', function (req, res) {
         }
     }
 });
-/*TODO:
-INSERT FUNCTIONALITY
-SELECT FUNCTIONALITY
-DELETE FUNCTIONALITY -- NOT NEEDED FOR MONDAY
-*/
 
 app.post('/endorsements', function (req, res) {
     var sql = "INSERT INTO `nba_endorsements` (`contractual_id`, `player_id`, `company_name`, `years_signed`, `salary`) VALUES (?, ?, ?, ?, ?)";
@@ -554,7 +567,7 @@ function getPlayerEndorsementsFiltered(res, mysql, context, complete) {
         complete();
     });
 }
-    
+
 function getSpecificPlayer(res, mysql, context, complete) {
     mysql.pool.query('SELECT DISTINCT pe.player_ID,concat(p.first_name," ",p.last_name) as player_name FROM player_endorsements as pe inner join nba_players as p on pe.player_ID=p.id', function (error, results, fields) {
         if (error) {
