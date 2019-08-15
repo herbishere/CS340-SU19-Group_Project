@@ -627,6 +627,80 @@ app.get('/player_endorsements_results/:player_ID', function (req, res) {
     }
 
 });
+
+/////////////////////////////////////////////////////////////
+
+//Player Filter by Team
+function getPlayerTeamsFiltered(res, mysql, context, complete) {
+    mysql.pool.query("SELECT t.id as team_ID, t.team_city as team_city,t.name as team_name from nba_teams as t", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.playerTeamsFiltered = results;
+        complete();
+    });
+}
+
+function getPlayerByTeamInfo(res, mysql, context, complete) {
+    mysql.pool.query("SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id", function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.playerByTeam = results;
+        complete();
+    });
+}
+
+app.get('/players_Filtered', function (req, res, next) {
+    var callbackCount = 0;
+    var context = {};
+    context.title = 'player_teams_filtered';
+    getPlayerTeamsFiltered(res, mysql, context, complete);
+    getPlayerByTeamInfo(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('players_Filtered', context);
+        }
+    }
+});
+
+app.post('/players_Filtered', function (req, res) {
+    var link = '/players_results/' + req.body.team_ID;
+    res.redirect(link);
+});
+
+function getPlayerTeamResults(req, res, mysql, context, complete) {
+    var query = "SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id WHERE np.id =" + mysql.pool.escape(req.params.team_ID);
+    mysql.pool.query(query, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.playerTeamResults = results;
+        complete();
+    });
+}
+
+
+app.get('/players_Results/:team_ID', function (req, res) {
+    var callbackCount = 0;
+    var context = {};
+    context.title = "Player by Team";
+    context.playerTEamResults = req.params.team_ID;
+    getPlayerTeamResults(req, res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('players_Results', context);
+        }
+    }
+
+});
 ////////////////////
 // ERROR HANDLING //
 ////////////////////

@@ -1,0 +1,36 @@
+<div id="players_results_display" class="table players filtered display">
+    <table>
+        <!-- TODO: POPULATE FROM QUERY RESULTS-->
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Team</th>
+                <th>Birthdate</th>
+                <th>Points</th>
+                <th>School</th>
+                <th>Position</th>
+                <th>Starting Year</th>
+                <th>Last Active Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each playerTeamResults}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{first_name}}</td>
+                <td>{{last_name}}</td>
+                <td>{{team_name}}</td>
+                <td>{{birthdate}}</td>
+                <td>{{points}}</td>
+                <td>{{school}}</td>
+                <td>{{position}}</td>
+                <td>{{player_year_start}}</td>
+                <td>{{last_year_active}}</td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+</div>
