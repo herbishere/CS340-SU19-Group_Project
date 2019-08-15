@@ -85,22 +85,34 @@ where t.name = :teamNameInput;
 -- get id and player's full name
 SELECT id, CONCAT(first_name, ' ', last_name) as name FROM nba_players
 
----add a player
+-- add a player
 
 insert into players (id,first_name,last_name,team_ID,birthdate,points,school,position,player_year_start,last_year_active)
 values (:IdInput,:firstNameInput,:lastNameInput,:teamIDInput,:birthdateInput,:pointsInput,:schoolInput,:positionInput,:playerYearStartInput,:lastYearActiveInput);
 
+
+-- FILTER PLAYER QUERIES
+-- sHOW teams in the dropdown
+
+SELECT t.id as team_ID, t.team_city as team_city,t.name as team_name from nba_teams as t
+
+-- show players in filtered page
+SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id
+
+-- show filtered players results
+SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id WHERE nt.id =:teamID ;
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 --get all of the endorsements info
 
 SELECT e.contractual_id,e.player_id,p.first_name,p.last_name,e.company_name,e.years_signed,e.salary FROM nba_endorsements  as e INNER JOIN nba_players as p on e.player_id = p.id
 
-select e.company_name,p.first_name,e.salary 
-from endorsements e inner join players p on p.id = e.player_ID
-where company_name = :companyNameInput;
+-- getting player name for insert endorsements
+SELECT p.id,concat(p.first_name," ",p.last_name) as player_name FROM nba_players as p;
 
-delete from endorsements where contractual_id = :contractualIDInput;
+-- insert into endorsements
+INSERT INTO `nba_endorsements` (`contractual_id`, `player_id`, `company_name`, `years_signed`, `salary`) VALUES (?, ?, ?, ?, ?);
+
 
 -------------------------------------------------------------------------
 
@@ -130,14 +142,18 @@ INSERT INTO `player_championships` (`player_ID`, `championship_ID`) VALUES (?, ?
 DELETE FROM `player_championships` WHERE `player_ID`=? AND `championship_ID`=?
 
 --------------------------------------------------------------------------------
+-- select function
+SELECT e.player_ID as Player_ID, pe.endorsement_ID as Endorsement_ID,p.first_name as First_Name,p.last_name as Last_Name,e.salary,e.years_signed,e.company_name FROM player_endorsements as pe INNER JOIN nba_players as p ON p.id = pe.player_ID INNER JOIN nba_endorsements as e ON e.contractual_ID = pe.endorsement_ID;
 
-select * from player_endorsements;
+-- show contracts from endorsements table to add into player/endorsements table
+SELECT e.contractual_id, e.player_id,e.company_name,concat(p.first_name," ",p.last_name) as player_name,e.salary FROM nba_endorsements as e INNER JOIN nba_players as p on p.id = e.player_id;
 
-select * from player_endorsements where player_ID = :playerIDUserInput;
-
-insert into player_endorsements (player_ID,endorsement_ID);
-
+-- insert into player_endorsements
+INSERT INTO `player_endorsements` ( `endorsement_ID`,`player_ID`) VALUES (?,?)
 
 
+-------------------
+--FILTER FUNCTION--
+-------------------
 
 
