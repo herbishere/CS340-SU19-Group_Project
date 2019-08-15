@@ -594,8 +594,8 @@ app.get('/player_endorsements_filtered', function (req, res, next) {
     }
 });
 
-app.post('/player_endorsements_results', function (req, res) {
-    var link = '/player_endorsements_filtered/' + req.body.player_ID;
+app.post('/player_endorsements_filtered', function (req, res) {
+    var link = '/player_endorsements_results/' + req.body.player_ID;
     res.redirect(link);
 });
 
