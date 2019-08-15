@@ -612,7 +612,7 @@ function getPlayerEndorsementsResults(req, res, mysql, context, complete) {
 }
 
 
-app.get('/player_endorsements_filtered/:player_ID', function (req, res) {
+app.get('/player_endorsements_results/:player_ID', function (req, res) {
     var callbackCount = 0;
     var context = {};
     context.title = "Endorsements by Selected Player";
