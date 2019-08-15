@@ -674,7 +674,7 @@ app.post('/players_Filtered', function (req, res) {
 });
 
 function getPlayerTeamResults(req, res, mysql, context, complete) {
-    var query = "SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id WHERE np.id =" + mysql.pool.escape(req.params.team_ID);
+    var query = "SELECT np.id,first_name,last_name, CONCAT(team_city, ' ', name) as team_name, birthdate,points,school,position,player_year_start,last_year_active FROM nba_players as np LEFT JOIN nba_teams as nt ON nt.id = np.team_id WHERE nt.id =" + mysql.pool.escape(req.params.team_ID);
     mysql.pool.query(query, function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
