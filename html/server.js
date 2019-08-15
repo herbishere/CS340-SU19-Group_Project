@@ -529,13 +529,13 @@ app.get('/player_endorsements', function (req, res, next) {
     context.title = 'Players/Endorsements';
     getPlayerEndorsements(res, mysql, context, complete);
     getSpecificEndorsements(res, mysql, context, complete);
-    getSpecificPlayer(res, mysql, context, complete);
+    //getSpecificPlayer(res, mysql, context, complete);
 
 
 
     function complete() {
         callbackCount++;
-        if (callbackCount >= 3) {
+        if (callbackCount >= 2) {
             res.render('players_endorsements', context);
         }
     }
