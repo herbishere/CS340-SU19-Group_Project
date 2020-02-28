@@ -1,7 +1,7 @@
 # Simple Basketball Web Application
 
 ## What It Does
-In this web application, you can create, read, update, and delete data from an NBA database.
+In this web application, you can create, read, update, and delete data from an NBA database with sample data.
 
 ## Technology Used
 - JavaScript
